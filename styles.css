@@ -620,6 +620,117 @@ svg.donut{filter:drop-shadow(0 2px 8px rgba(0,0,0,.1));}
   float:right;background:none;border:none;cursor:pointer;
   font-size:1.2rem;color:var(--ink3);margin-top:-4px;
 }
+/* ─── BARCODE SCANNER OVERLAY ───────────────────────── */
+.scanner-overlay{
+  display:none;position:fixed;inset:0;z-index:300;
+  background:#000;flex-direction:column;align-items:center;justify-content:center;
+}
+.scanner-overlay.open{display:flex;}
+.scanner-header{
+  position:absolute;top:0;left:0;right:0;
+  padding:20px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(to bottom,rgba(0,0,0,.7),transparent);
+  z-index:10;
+}
+.scanner-title{
+  font-family:var(--font-display);font-size:1.2rem;
+  color:white;font-weight:700;
+}
+.scanner-close-btn{
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);
+  color:white;border-radius:40px;padding:8px 18px;
+  font-family:var(--font-body);font-size:.85rem;font-weight:500;
+  cursor:pointer;backdrop-filter:blur(8px);transition:all .18s;
+}
+.scanner-close-btn:hover{background:rgba(255,255,255,.25);}
+
+#scannerVideo{
+  width:100%;height:100%;object-fit:cover;position:absolute;inset:0;
+}
+.scanner-frame-wrap{
+  position:relative;z-index:5;
+  width:min(72vw,320px);height:min(72vw,320px);
+  pointer-events:none;
+}
+.scanner-frame{
+  position:absolute;inset:0;
+  border-radius:16px;
+  box-shadow:0 0 0 9999px rgba(0,0,0,.55);
+}
+/* Corner brackets */
+.scanner-frame::before,.scanner-frame::after,
+.sf-br::before,.sf-br::after{
+  content:'';position:absolute;width:36px;height:36px;
+  border-color:var(--emerald2);border-style:solid;
+}
+.scanner-frame::before{top:0;left:0;border-width:4px 0 0 4px;border-radius:12px 0 0 0;}
+.scanner-frame::after {top:0;right:0;border-width:4px 4px 0 0;border-radius:0 12px 0 0;}
+.sf-br{position:absolute;inset:0;}
+.sf-br::before{bottom:0;left:0; border-width:0 0 4px 4px;border-radius:0 0 0 12px;}
+.sf-br::after {bottom:0;right:0;border-width:0 4px 4px 0;border-radius:0 0 12px 0;}
+
+/* Laser scan line */
+.scan-line{
+  position:absolute;left:6%;right:6%;height:2px;top:10%;
+  background:linear-gradient(90deg,transparent,var(--emerald2),#6ee7b7,var(--emerald2),transparent);
+  border-radius:2px;
+  box-shadow:0 0 8px 1px rgba(45,148,103,.7);
+  animation:scanMove 2.2s ease-in-out infinite;
+}
+@keyframes scanMove{
+  0%  {top:10%;opacity:1;}
+  48% {top:88%;opacity:1;}
+  50% {top:88%;opacity:0;}
+  52% {top:10%;opacity:0;}
+  54% {top:10%;opacity:1;}
+  100%{top:10%;opacity:1;}
+}
+
+.scanner-footer{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:28px 24px 36px;
+  background:linear-gradient(to top,rgba(0,0,0,.75),transparent);
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  z-index:10;
+}
+.scanner-hint{
+  font-size:.85rem;color:rgba(255,255,255,.75);text-align:center;line-height:1.5;
+}
+.scanner-status{
+  font-size:.8rem;font-weight:600;padding:7px 20px;border-radius:20px;
+  background:rgba(255,255,255,.12);color:white;
+  border:1px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;gap:6px;
+  transition:all .3s;
+}
+.scanner-status.detecting{background:rgba(30,107,74,.4);border-color:var(--emerald2);}
+.scanner-status.found{background:rgba(30,107,74,.8);border-color:#6ee7b7;}
+.status-pulse{
+  width:8px;height:8px;border-radius:50%;background:var(--emerald2);
+  animation:pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
+
+/* Result flash on detection */
+.scanner-found-flash{
+  position:absolute;inset:0;background:rgba(45,148,103,.25);
+  opacity:0;pointer-events:none;z-index:6;border-radius:16px;
+  transition:opacity .15s;
+}
+.scanner-found-flash.flash{opacity:1;}
+
+/* Camera denied error */
+.scanner-error{
+  position:absolute;inset:0;display:none;flex-direction:column;
+  align-items:center;justify-content:center;gap:16px;
+  background:#111;z-index:20;padding:32px;text-align:center;
+}
+.scanner-error.show{display:flex;}
+.scanner-error-icon{font-size:3rem;}
+.scanner-error h4{color:white;font-family:var(--font-display);font-size:1.3rem;}
+.scanner-error p{color:rgba(255,255,255,.6);font-size:.875rem;line-height:1.6;}
+
 
 /* ─── TOAST ──────────────────────────────────────────── */
 .toast{
