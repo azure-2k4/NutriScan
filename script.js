@@ -142,6 +142,199 @@ function setTab(el,mode){
   else if(mode==='manual'){input.placeholder='Manual entry...';openModal();}
   else{input.placeholder='Product name or barcode...';}
 }
+/* ─── BARCODE SCANNER ───────────────────────── */
+let scannerCodeReader = null;
+let scannerStream = null;
+let scanActive = false;
+
+// Barcode → product key mapping (demo: map known barcodes to products)
+const barcodeMap = {
+  '8901234567890': 'oats',
+  '8900012345678': 'yogurt',
+  '5012345678901': 'chips',
+  '4901234567890': 'cola',
+  '7891234567890': 'granola',
+  '3456789012345': 'almonds',
+};
+
+function openScanner(){
+  const overlay = document.getElementById('scannerOverlay');
+  overlay.classList.add('open');
+  document.getElementById('scannerError').classList.remove('show');
+  setStatus('Initialising camera…', false);
+  startScanner();
+}
+
+function closeScanner(){
+  scanActive = false;
+  document.getElementById('scannerOverlay').classList.remove('open');
+  stopCamera();
+  // Reset the barcode tab back to name tab visually
+  const tabs = document.querySelectorAll('.stab');
+  tabs.forEach(t => t.classList.remove('active'));
+  if(tabs[0]) tabs[0].classList.add('active');
+  document.getElementById('searchInput').placeholder = 'Product name or barcode...';
+}
+
+function stopCamera(){
+  if(scannerCodeReader){
+    try{ scannerCodeReader.reset(); } catch(e){}
+    scannerCodeReader = null;
+  }
+  if(scannerStream){
+    scannerStream.getTracks().forEach(t => t.stop());
+    scannerStream = null;
+  }
+  const video = document.getElementById('scannerVideo');
+  video.srcObject = null;
+}
+
+function setStatus(text, isDetecting=false, isFound=false){
+  const el = document.getElementById('scannerStatus');
+  const txt = document.getElementById('scannerStatusText');
+  txt.textContent = text;
+  el.className = 'scanner-status';
+  if(isFound) el.classList.add('found');
+  else if(isDetecting) el.classList.add('detecting');
+}
+
+async function startScanner(){
+  scanActive = true;
+  const video = document.getElementById('scannerVideo');
+
+  // Request camera
+  try {
+    scannerStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } }
+    });
+    video.srcObject = scannerStream;
+    setStatus('Scanning… point at a barcode', true);
+  } catch(err) {
+    document.getElementById('scannerError').classList.add('show');
+    return;
+  }
+
+  // Try ZXing first (best barcode support)
+  if(window.ZXing){
+    useZXing(video);
+    return;
+  }
+
+  // Fallback: BarcodeDetector API (Chrome/Edge native)
+  if('BarcodeDetector' in window){
+    useBarcodeDetector(video);
+    return;
+  }
+
+  // Last fallback: manual barcode input prompt
+  setStatus('Camera ready — enter barcode manually', false);
+  showManualBarcodePrompt();
+}
+
+/* ── ZXing scanner ── */
+function useZXing(video){
+  try{
+    const hints = new Map();
+    const formats = [
+      ZXing.BarcodeFormat.EAN_13,
+      ZXing.BarcodeFormat.EAN_8,
+      ZXing.BarcodeFormat.UPC_A,
+      ZXing.BarcodeFormat.UPC_E,
+      ZXing.BarcodeFormat.CODE_128,
+      ZXing.BarcodeFormat.CODE_39,
+      ZXing.BarcodeFormat.QR_CODE,
+      ZXing.BarcodeFormat.DATA_MATRIX,
+    ];
+    hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, formats);
+    hints.set(ZXing.DecodeHintType.TRY_HARDER, true);
+
+    scannerCodeReader = new ZXing.BrowserMultiFormatReader(hints, 400);
+
+    scannerCodeReader.decodeFromVideoElement(video, (result, err) => {
+      if(!scanActive) return;
+      if(result){
+        onBarcodeDetected(result.getText());
+      }
+    });
+  } catch(e){
+    // ZXing failed, try native
+    if('BarcodeDetector' in window) useBarcodeDetector(video);
+    else showManualBarcodePrompt();
+  }
+}
+
+/* ── Native BarcodeDetector API ── */
+async function useBarcodeDetector(video){
+  const detector = new BarcodeDetector({
+    formats: ['ean_13','ean_8','upc_a','upc_e','code_128','code_39','qr_code']
+  });
+
+  async function tick(){
+    if(!scanActive) return;
+    try{
+      const barcodes = await detector.detect(video);
+      if(barcodes.length > 0){
+        onBarcodeDetected(barcodes[0].rawValue);
+        return;
+      }
+    } catch(e){}
+    requestAnimationFrame(tick);
+  }
+  video.addEventListener('play', tick, {once:true});
+}
+
+/* ── On barcode detected ── */
+function onBarcodeDetected(code){
+  if(!scanActive) return;
+  scanActive = false; // prevent double-fire
+
+  // Flash green on the scan window
+  const flash = document.getElementById('foundFlash');
+  flash.classList.add('flash');
+  setTimeout(()=> flash.classList.remove('flash'), 300);
+
+  setStatus(`✓ Barcode: ${code}`, false, true);
+  showToast(`📦 Barcode detected: ${code}`);
+
+  setTimeout(()=>{
+    closeScanner();
+    // Look up the barcode in our map
+    const key = barcodeMap[code];
+    if(key){
+      loadDemo(key);
+      showToast(`✅ Product found for barcode ${code}!`);
+    } else {
+      // Unknown barcode — show in search input and try text search
+      document.getElementById('searchInput').value = code;
+      showPage('dashboard');
+      showToast(`🔍 Barcode ${code} — not in demo DB. Try a known barcode.`);
+      // Show a hint of known barcodes
+      setTimeout(()=> showToast('💡 Try: 8901234567890 (Oats) or 4901234567890 (Cola)'), 3000);
+    }
+  }, 600);
+}
+
+/* ── Fallback: show manual barcode entry in scanner footer ── */
+function showManualBarcodePrompt(){
+  const footer = document.querySelector('.scanner-footer');
+  footer.innerHTML = `
+    <div class="scanner-hint" style="margin-bottom:4px;">Camera scanning unavailable in this browser.<br>Enter barcode manually:</div>
+    <div style="display:flex;gap:8px;width:100%;max-width:320px;">
+      <input id="manualBarcodeInput" style="flex:1;padding:11px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:white;font-size:.9rem;font-family:var(--font-body);outline:none;" placeholder="e.g. 8901234567890" type="number"/>
+      <button onclick="submitManualBarcode()" style="padding:11px 18px;border-radius:8px;background:var(--emerald);color:white;border:none;font-weight:600;cursor:pointer;font-family:var(--font-body);">Go</button>
+    </div>
+    <div class="scanner-hint" style="font-size:.72rem;margin-top:2px;">Demo barcodes: 8901234567890 · 4901234567890 · 5012345678901</div>
+  `;
+  const input = document.getElementById('manualBarcodeInput');
+  if(input) input.addEventListener('keydown', e=>{ if(e.key==='Enter') submitManualBarcode(); });
+}
+
+function submitManualBarcode(){
+  const input = document.getElementById('manualBarcodeInput');
+  if(!input) return;
+  const code = input.value.trim();
+  if(code) onBarcodeDetected(code);
+}
 
 /* ─── AUTH ─────────────────────────────────── */
 function handleRegister(){showToast('✅ Account created! Redirecting...');setTimeout(()=>showPage('dashboard'),800);}
@@ -157,6 +350,8 @@ function toggleFav(btn){
 function openModal(){document.getElementById('modalOverlay').classList.add('open');}
 function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
 document.getElementById('modalOverlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
+
+
 
 /* ─── TOAST ─────────────────────────────────── */
 let toastTimer;
