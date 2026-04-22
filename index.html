@@ -726,6 +726,37 @@
   </div>
 </div>
 
+!-- ═══════════════════ BARCODE SCANNER ═══════════════════ -->
+<div class="scanner-overlay" id="scannerOverlay">
+  <video id="scannerVideo" autoplay playsinline muted></video>
+
+  <div class="scanner-header">
+    <div class="scanner-title">📷 NutriScan — Barcode Scanner</div>
+    <button class="scanner-close-btn" onclick="closeScanner()">✕ Close</button>
+  </div>
+
+  <div class="scanner-frame-wrap">
+    <div class="scanner-frame"><div class="sf-br"></div></div>
+    <div class="scan-line"></div>
+    <div class="scanner-found-flash" id="foundFlash"></div>
+  </div>
+
+  <div class="scanner-footer">
+    <div class="scanner-status" id="scannerStatus">
+      <div class="status-pulse"></div>
+      <span id="scannerStatusText">Initialising camera…</span>
+    </div>
+    <div class="scanner-hint">Point your camera at any barcode on a food package.<br>Keep it steady — scanning happens automatically.</div>
+  </div>
+
+  <div class="scanner-error" id="scannerError">
+    <div class="scanner-error-icon">📵</div>
+    <h4>Camera Access Denied</h4>
+    <p>NutriScan needs camera permission to scan barcodes. Please allow camera access in your browser settings and try again.</p>
+    <button class="scanner-close-btn" style="margin-top:8px;" onclick="closeScanner()">Go Back</button>
+  </div>
+</div>
+  
 <!-- ═══════════════════ TOAST ═══════════════════ -->
 <div class="toast" id="toast">✅ Action completed!</div>
 
