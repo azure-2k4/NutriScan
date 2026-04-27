@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NutriScan — AI Food & Nutrition Advisor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav>
+  <div class="nav-logo" onclick="showPage('landing')">
+    <span>
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+    </span>
+    NutriScan
+  </div>
+  <div class="nav-links" id="navLinks">
+    <button onclick="showPage('landing')" class="active" id="nav-landing">Home</button>
+    <button onclick="showPage('dashboard')" id="nav-dashboard">Dashboard</button>
+    <button onclick="showPage('history')" id="nav-history">History</button>
+    <button onclick="showPage('profile')" id="nav-profile">Profile</button>
+    <button onclick="showPage('admin')" id="nav-admin">Admin</button>
+    <button onclick="showPage('register')" class="nav-cta" id="nav-register">Get Started</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════ LANDING ═══════════════════ -->
+<div class="page active" id="page-landing">
+  <section class="hero">
+    <div class="hero-text">
+      <p class="section-label">AI-Powered Nutrition Intelligence</p>
+      <h1>Know exactly what's <em>inside</em> your food</h1>
+      <p>Scan or search any packaged food product and get instant AI health scores, allergen alerts, and personalized recommendations — tailored to your health goals.</p>
+      <div class="hero-btns">
+        <button class="btn btn-primary" onclick="showPage('register')">
+          <span>🚀</span> Start Scanning Free
+        </button>
+        <button class="btn btn-outline" onclick="showPage('dashboard')">
+          <span>👁</span> See Demo
+        </button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="product-icon">🥜</div>
+          <div>
+            <div class="product-name">Peanut Butter Crunch Bar</div>
+            <div class="product-brand">NutriCo Foods</div>
+          </div>
+        </div>
+        <div class="score-ring">
+          <div>
+            <div class="score-num">74</div>
+            <div style="font-size:.7rem;color:var(--ink3);">Health Score</div>
+          </div>
+          <div class="score-label">Good protein source,<br>watch sugar content</div>
+          <div class="score-badge badge-yellow">Moderate</div>
+        </div>
+        <div class="nutrient-bars">
+          <div class="nb-row">
+            <span class="nb-label">Protein</span>
+            <div class="nb-bar"><div class="nb-fill good" style="width:72%"></div></div>
+            <span class="nb-val">18g</span>
+          </div>
+          <div class="nb-row">
+            <span class="nb-label">Sugar</span>
+            <div class="nb-bar"><div class="nb-fill warn" style="width:55%"></div></div>
+            <span class="nb-val">12g</span>
+          </div>
+          <div class="nb-row">
+            <span class="nb-label">Fat</span>
+            <div class="nb-bar"><div class="nb-fill warn" style="width:40%"></div></div>
+            <span class="nb-val">9g</span>
+          </div>
+          <div class="nb-row">
+            <span class="nb-label">Fibre</span>
+            <div class="nb-bar"><div class="nb-fill good" style="width:30%"></div></div>
+            <span class="nb-val">3g</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-section">
+    <p class="section-label">What We Do</p>
+    <div class="section-title">Everything you need to eat smarter</div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon fi-green">🔍</div>
+        <h3>Smart Product Lookup</h3>
+        <p>Search by product name or enter a barcode number. We pull data from global nutrition databases instantly.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-amber">🤖</div>
+        <h3>AI Health Scoring</h3>
+        <p>Our AI computes a 0–100 health score with Red/Yellow/Green flags based on your personal health profile.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-rose">🚨</div>
+        <h3>Allergen Alerts</h3>
+        <p>Instant warnings for peanuts, gluten, dairy, soy, and more — matched against your registered allergies.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-green">🥗</div>
+        <h3>Personalized Advice</h3>
+        <p>Get tailored recommendations based on your goals — weight loss, diabetes management, muscle gain, and more.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-amber">📊</div>
+        <h3>Scan History & Analytics</h3>
+        <p>Track your nutrition journey over time with beautiful charts showing your average scores and patterns.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-rose">🔄</div>
+        <h3>Healthier Alternatives</h3>
+        <p>When a product scores low, we suggest better alternatives that match your taste and dietary preferences.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-products">
+    <p class="section-label">Browse Demo Products</p>
+    <div class="section-title">Popular scanned products</div>
+    <div class="products-row">
+      <div class="mini-product-card" onclick="loadDemo('yogurt')">
+        <div class="mpc-emoji">🥛</div>
+        <div class="mpc-name">Greek Yogurt Plain</div>
+        <div class="mpc-brand">DairyCo</div>
+        <div class="mpc-score"><span class="dot dot-green"></span>Score: 88</div>
+      </div>
+      <div class="mini-product-card" onclick="loadDemo('chips')">
+        <div class="mpc-emoji">🍟</div>
+        <div class="mpc-name">Classic Potato Chips</div>
+        <div class="mpc-brand">CrunchBrand</div>
+        <div class="mpc-score"><span class="dot dot-red"></span>Score: 28</div>
+      </div>
+      <div class="mini-product-card" onclick="loadDemo('oats')">
+        <div class="mpc-emoji">🌾</div>
+        <div class="mpc-name">Rolled Oats Original</div>
+        <div class="mpc-brand">GrainCo</div>
+        <div class="mpc-score"><span class="dot dot-green"></span>Score: 92</div>
+      </div>
+      <div class="mini-product-card" onclick="loadDemo('cola')">
+        <div class="mpc-emoji">🥤</div>
+        <div class="mpc-name">Cola Fizzy Drink</div>
+        <div class="mpc-brand">SodaCo</div>
+        <div class="mpc-score"><span class="dot dot-red"></span>Score: 15</div>
+      </div>
+      <div class="mini-product-card" onclick="loadDemo('granola')">
+        <div class="mpc-emoji">🍫</div>
+        <div class="mpc-name">Chocolate Granola Bar</div>
+        <div class="mpc-brand">SnackRight</div>
+        <div class="mpc-score"><span class="dot dot-yellow"></span>Score: 61</div>
+      </div>
+      <div class="mini-product-card" onclick="loadDemo('almonds')">
+        <div class="mpc-emoji">🥜</div>
+        <div class="mpc-name">Roasted Almonds</div>
+        <div class="mpc-brand">NutHouse</div>
+        <div class="mpc-score"><span class="dot dot-green"></span>Score: 85</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════ REGISTER ═══════════════════ -->
+<div class="page" id="page-register">
+  <div class="auth-wrap">
+    <div class="auth-left">
+      <h2>Join thousands eating smarter</h2>
+      <p>Set up your health profile once and get personalized nutrition analysis every time you scan a food product.</p>
+      <div class="auth-pills">
+        <div class="auth-pill"><span>✅ Free to use</span></div>
+        <div class="auth-pill"><span>🔒 Your data stays private</span></div>
+        <div class="auth-pill"><span>🤖 Powered by AI</span></div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-box">
+        <h3>Create your account</h3>
+        <p>Start your nutrition journey today</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input class="form-input" type="text" placeholder="Arjun"/>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input class="form-input" type="text" placeholder="Sharma"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input class="form-input" type="email" placeholder="arjun@example.com"/>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input class="form-input" type="password" placeholder="Min. 8 characters"/>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Age</label>
+            <input class="form-input" type="number" placeholder="25"/>
+          </div>
+          <div class="form-group">
+            <label>Gender</label>
+            <select class="form-input">
+              <option>Select...</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Health Goal</label>
+          <select class="form-input">
+            <option>Select your goal...</option>
+            <option>Weight Loss</option>
+            <option>Muscle Gain</option>
+            <option>Diabetes Management</option>
+            <option>General Wellness</option>
+          </select>
+        </div>
+        <button class="form-submit" onclick="handleRegister()">Create Account →</button>
+        <div class="auth-switch">Already have an account? <a onclick="showPage('login')">Sign in</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ LOGIN ═══════════════════ -->
+<div class="page" id="page-login">
+  <div class="auth-wrap">
+    <div class="auth-left">
+      <h2>Welcome back to NutriScan</h2>
+      <p>Continue your journey to healthier eating with AI-powered insights personalized for you.</p>
+      <div class="auth-pills">
+        <div class="auth-pill"><span>📈 Track your progress</span></div>
+        <div class="auth-pill"><span>🥗 Get daily recommendations</span></div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-box">
+        <h3>Sign in</h3>
+        <p>Welcome back! Enter your credentials to continue.</p>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input class="form-input" type="email" placeholder="arjun@example.com"/>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input class="form-input" type="password" placeholder="Your password"/>
+        </div>
+        <button class="form-submit" onclick="handleLogin()">Sign In →</button>
+        <div class="form-divider">or</div>
+        <div class="auth-switch">Don't have an account? <a onclick="showPage('register')">Register free</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ DASHBOARD ═══════════════════ -->
+<div class="page" id="page-dashboard">
+  <div class="dashboard-wrap">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="user-card">
+        <div class="user-avatar">A</div>
+        <div class="user-name">Arjun Sharma</div>
+        <div class="user-meta">Weight Loss · Diabetic</div>
+        <div class="user-badges">
+          <span class="ubadge">No Gluten</span>
+          <span class="ubadge">No Peanuts</span>
+          <span class="ubadge">Vegetarian</span>
+        </div>
+      </div>
+
+      <div class="search-card">
+        <h4>Search Product</h4>
+        <div class="search-bar">
+          <input class="search-input" type="text" id="searchInput" placeholder="Product name or barcode..."/>
+          <button class="icon-btn" onclick="triggerSearch()">🔍</button>
+        </div>
+        <div class="search-tabs">
+          <button class="stab active" onclick="setTab(this,'name')">By Name</button>
+          <button class="stab" onclick="setTab(this,'barcode')">Barcode</button>
+          <button class="stab" onclick="setTab(this,'manual')">Manual</button>
+        </div>
+      </div>
+
+      <div class="quick-stats">
+        <div class="stat-card">
+          <div class="stat-num">47</div>
+          <div class="stat-label">Total Scans</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">71</div>
+          <div class="stat-label">Avg Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">12</div>
+          <div class="stat-label">Favourites</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">5</div>
+          <div class="stat-label">Alerts</div>
+        </div>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;">
+        <div style="font-size:.8rem;font-weight:600;color:var(--ink);margin-bottom:12px;">Recent Scans</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="hist-row" onclick="loadDemo('oats')" style="padding:8px 10px;">
+            <span class="hist-emoji">🌾</span>
+            <div class="hist-info"><div class="hist-name" style="font-size:.78rem;">Rolled Oats</div><div class="hist-date">Today</div></div>
+            <span class="hist-score score-green">92</span>
+          </div>
+          <div class="hist-row" onclick="loadDemo('granola')" style="padding:8px 10px;">
+            <span class="hist-emoji">🍫</span>
+            <div class="hist-info"><div class="hist-name" style="font-size:.78rem;">Granola Bar</div><div class="hist-date">Yesterday</div></div>
+            <span class="hist-score score-yellow">61</span>
+          </div>
+          <div class="hist-row" onclick="loadDemo('chips')" style="padding:8px 10px;">
+            <span class="hist-emoji">🍟</span>
+            <div class="hist-info"><div class="hist-name" style="font-size:.78rem;">Potato Chips</div><div class="hist-date">Apr 18</div></div>
+            <span class="hist-score score-red">28</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Product Result -->
+      <div class="result-card" id="resultCard">
+        <div class="rc-header">
+          <div class="rc-icon" id="rcIcon">🌾</div>
+          <div class="rc-info">
+            <div class="rc-name" id="rcName">Rolled Oats Original</div>
+            <div class="rc-brand" id="rcBrand">GrainCo · Barcode: 8901234567890</div>
+            <div class="rc-tags" id="rcTags">
+              <span class="tag tag-veg">✓ Vegetarian</span>
+              <span class="tag tag-veg">✓ Gluten Free</span>
+              <span class="tag tag-sugar">⚠ Low Sugar</span>
+            </div>
+          </div>
+          <div class="rc-score-area">
+            <div class="big-score score-green" id="rcScore">92</div>
+            <div style="font-size:.7rem;color:var(--ink3);">/ 100</div>
+            <span class="big-badge badge-green" id="rcBadge">🟢 Excellent</span>
+            <button style="margin-top:8px;background:none;border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:.75rem;cursor:pointer;color:var(--ink2);" onclick="toggleFav(this)">☆ Save</button>
+          </div>
+        </div>
+
+        <div class="nutrition-table" id="nutritionTable">
+          <div class="nt-cell"><div class="nt-val">379</div><div class="nt-label">Calories (kcal)</div></div>
+          <div class="nt-cell"><div class="nt-val">17g</div><div class="nt-label">Protein</div></div>
+          <div class="nt-cell"><div class="nt-val">1g</div><div class="nt-label">Sugar</div></div>
+          <div class="nt-cell"><div class="nt-val">7g</div><div class="nt-label">Fat</div></div>
+          <div class="nt-cell"><div class="nt-val">10g</div><div class="nt-label">Fibre</div></div>
+          <div class="nt-cell"><div class="nt-val">66g</div><div class="nt-label">Carbs</div></div>
+          <div class="nt-cell"><div class="nt-val">2mg</div><div class="nt-label">Sodium</div></div>
+          <div class="nt-cell"><div class="nt-val">No</div><div class="nt-label">Additives</div></div>
+        </div>
+
+        <div class="ai-explanation" id="aiExplanation">
+          <span class="ai-icon">🤖</span>
+          <div class="ai-text" id="aiText">Excellent choice! Rolled oats are a whole grain powerhouse — high in beta-glucan fibre which helps lower cholesterol and regulate blood sugar. Perfect for your diabetes management goal. Low glycemic index, minimal processing, and no added sugar make this a top-rated breakfast option.</div>
+        </div>
+
+        <div class="allergen-alerts" id="allergenAlerts">
+          <!-- populated by JS -->
+        </div>
+
+        <div class="alternatives">
+          <h4>💡 Healthier Alternatives You Might Like</h4>
+          <div class="alt-grid" id="altGrid">
+            <div class="alt-card" onclick="loadDemo('almonds')"><div class="alt-emoji">🥜</div><div class="alt-name">Roasted Almonds</div><div class="alt-score">Score: 85</div></div>
+            <div class="alt-card"><div class="alt-emoji">🫐</div><div class="alt-name">Blueberry Overnight Oats</div><div class="alt-score">Score: 89</div></div>
+            <div class="alt-card"><div class="alt-emoji">🍌</div><div class="alt-name">Banana Wheat Flakes</div><div class="alt-score">Score: 79</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trend mini-chart -->
+      <div class="history-card">
+        <div class="hc-header">
+          <h4>📈 Your Nutrition Score Trend</h4>
+          <button class="btn btn-outline btn-sm" onclick="showPage('history')">View Full Analytics →</button>
+        </div>
+        <div class="bar-chart">
+          <div class="bar-group"><div class="bar" style="background:var(--emerald);height:60%"></div><div class="bar-label">Mon</div><div class="bar-val">65</div></div>
+          <div class="bar-group"><div class="bar" style="background:var(--emerald);height:72%"></div><div class="bar-label">Tue</div><div class="bar-val">78</div></div>
+          <div class="bar-group"><div class="bar" style="background:var(--amber);height:55%"></div><div class="bar-label">Wed</div><div class="bar-val">60</div></div>
+          <div class="bar-group"><div class="bar" style="background:var(--emerald);height:80%"></div><div class="bar-label">Thu</div><div class="bar-val">84</div></div>
+          <div class="bar-group"><div class="bar" style="background:var(--emerald);height:68%"></div><div class="bar-label">Fri</div><div class="bar-val">72</div></div>
+          <div class="bar-group"><div class="bar" style="background:var(--amber);height:50%"></div><div class="bar-label">Sat</div><div class="bar-val">55</div></div>
+          <div class="bar-group"><div class="bar" style="background:var(--emerald);height:85%"></div><div class="bar-label">Sun</div><div class="bar-val">91</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PROFILE ═══════════════════ -->
+<div class="page" id="page-profile">
+  <div class="profile-wrap">
+    <div class="profile-header">
+      <div class="prof-avatar">A</div>
+      <div class="prof-info">
+        <h2>Arjun Sharma</h2>
+        <p>arjun@example.com · Member since March 2026</p>
+        <div class="prof-chips">
+          <span class="prof-chip">🎯 Weight Loss</span>
+          <span class="prof-chip">🩺 Diabetic</span>
+          <span class="prof-chip">🌱 Vegetarian</span>
+        </div>
+      </div>
+      <button class="btn btn-outline" style="margin-left:auto;color:white;border-color:rgba(255,255,255,.4);" onclick="showToast('Profile saved!')">Save Changes</button>
+    </div>
+
+    <div class="profile-section">
+      <div class="ps-title">Personal Information</div>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input class="form-input" value="Arjun"/></div>
+        <div class="form-group"><label>Last Name</label><input class="form-input" value="Sharma"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Age</label><input class="form-input" type="number" value="28"/></div>
+        <div class="form-group"><label>Gender</label><select class="form-input"><option selected>Male</option><option>Female</option><option>Other</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Weight (kg)</label><input class="form-input" type="number" value="74"/></div>
+        <div class="form-group"><label>Height (cm)</label><input class="form-input" type="number" value="175"/></div>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <div class="ps-title">Health Goals & Conditions</div>
+      <div class="toggle-group">
+        <div class="toggle-row">
+          <div><div class="toggle-label">Weight Loss</div><div class="toggle-sub">Prioritize low-calorie options</div></div>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">Diabetes Management</div><div class="toggle-sub">Flag high-sugar & high-GI products</div></div>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">Muscle Gain</div><div class="toggle-sub">Highlight high-protein alternatives</div></div>
+          <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">Heart Health</div><div class="toggle-sub">Monitor saturated fat & sodium</div></div>
+          <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <div class="ps-title">Dietary Preferences</div>
+      <div class="toggle-group">
+        <div class="toggle-row">
+          <div><div class="toggle-label">Vegetarian</div></div>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">Vegan</div></div>
+          <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">Gluten-Free</div></div>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <div class="ps-title">Allergy Settings</div>
+      <p style="font-size:.82rem;color:var(--ink3);margin-bottom:14px;">Tap to toggle your allergens. Active ones will trigger alerts when scanning products.</p>
+      <div class="allergy-chips">
+        <div class="allergy-chip" onclick="this.classList.toggle('inactive')">🥜 Peanuts</div>
+        <div class="allergy-chip" onclick="this.classList.toggle('inactive')">🌾 Gluten</div>
+        <div class="allergy-chip inactive" onclick="this.classList.toggle('inactive')">🥛 Dairy</div>
+        <div class="allergy-chip inactive" onclick="this.classList.toggle('inactive')">🫘 Soy</div>
+        <div class="allergy-chip inactive" onclick="this.classList.toggle('inactive')">🥚 Eggs</div>
+        <div class="allergy-chip inactive" onclick="this.classList.toggle('inactive')">🦐 Shellfish</div>
+        <div class="allergy-chip inactive" onclick="this.classList.toggle('inactive')">🐟 Fish</div>
+        <div class="allergy-chip inactive" onclick="this.classList.toggle('inactive')">🌰 Tree Nuts</div>
+      </div>
+    </div>
+
+    <div style="text-align:right;margin-top:8px;">
+      <button class="btn btn-primary" onclick="showToast('✅ Profile updated successfully!')">Save All Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ HISTORY & ANALYTICS ═══════════════════ -->
+<div class="page" id="page-history">
+  <div class="analytics-wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <p class="section-label">Your Nutrition Journey</p>
+        <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--ink);">History & Analytics</div>
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="showToast('Exporting PDF report...')">📥 Export Report</button>
+    </div>
+
+    <div class="analytics-grid">
+      <div>
+        <div class="chart-card">
+          <div class="chart-title">📈 Weekly Health Score Trend</div>
+          <div class="bar-chart" style="height:180px;align-items:flex-end;">
+            <div class="bar-group"><div class="bar" style="background:var(--emerald);height:65%;"></div><div class="bar-label">Week 1</div><div class="bar-val">67</div></div>
+            <div class="bar-group"><div class="bar" style="background:var(--emerald);height:70%;"></div><div class="bar-label">Week 2</div><div class="bar-val">72</div></div>
+            <div class="bar-group"><div class="bar" style="background:var(--amber);height:60%;"></div><div class="bar-label">Week 3</div><div class="bar-val">62</div></div>
+            <div class="bar-group"><div class="bar" style="background:var(--emerald);height:78%;"></div><div class="bar-label">Week 4</div><div class="bar-val">80</div></div>
+            <div class="bar-group"><div class="bar" style="background:var(--emerald);height:82%;"></div><div class="bar-label">Week 5</div><div class="bar-val">85</div></div>
+            <div class="bar-group"><div class="bar" style="background:var(--emerald);height:88%;"></div><div class="bar-label">Week 6</div><div class="bar-val">91</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">🎯 Score Distribution</div>
+        <div class="donut-wrap">
+          <svg class="donut" width="160" height="160" viewBox="0 0 160 160">
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#f0f0e8" stroke-width="24"/>
+            <!-- Green 55% -->
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#22c55e" stroke-width="24"
+              stroke-dasharray="207 170" stroke-dashoffset="0" transform="rotate(-90 80 80)"/>
+            <!-- Yellow 30% -->
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#eab308" stroke-width="24"
+              stroke-dasharray="113 264" stroke-dashoffset="-207" transform="rotate(-90 80 80)"/>
+            <!-- Red 15% -->
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#ef4444" stroke-width="24"
+              stroke-dasharray="57 320" stroke-dashoffset="-320" transform="rotate(-90 80 80)"/>
+            <text x="80" y="76" text-anchor="middle" font-family="Playfair Display" font-size="22" font-weight="700" fill="#1a1a18">47</text>
+            <text x="80" y="92" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#8a8a7a">TOTAL SCANS</text>
+          </svg>
+          <div class="donut-legend">
+            <div class="dl-row"><div class="dl-dot" style="background:#22c55e"></div><span class="dl-label">Green (Good)</span><span class="dl-val">26</span></div>
+            <div class="dl-row"><div class="dl-dot" style="background:#eab308"></div><span class="dl-label">Yellow (Moderate)</span><span class="dl-val">14</span></div>
+            <div class="dl-row"><div class="dl-dot" style="background:#ef4444"></div><span class="dl-label">Red (Avoid)</span><span class="dl-val">7</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="full-history">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div style="font-size:.95rem;font-weight:600;color:var(--ink);">All Scan Records</div>
+        <div class="fh-filters">
+          <button class="fh-filter active">All</button>
+          <button class="fh-filter">🟢 Green</button>
+          <button class="fh-filter">🟡 Yellow</button>
+          <button class="fh-filter">🔴 Red</button>
+        </div>
+      </div>
+      <div class="history-table">
+        <div class="ht-header">
+          <span>Product</span><span>Score</span><span>Category</span><span>Date</span><span>Action</span>
+        </div>
+        <div class="ht-row" onclick="loadDemo('oats');showPage('dashboard')">
+          <span class="ht-product"><span style="font-size:1.2rem;">🌾</span>Rolled Oats Original</span>
+          <span class="ht-score score-green">92</span>
+          <span class="ht-cat">Cereals</span>
+          <span class="ht-date">Apr 20</span>
+          <span><button class="action-btn approve">View</button></span>
+        </div>
+        <div class="ht-row" onclick="loadDemo('yogurt');showPage('dashboard')">
+          <span class="ht-product"><span style="font-size:1.2rem;">🥛</span>Greek Yogurt Plain</span>
+          <span class="ht-score score-green">88</span>
+          <span class="ht-cat">Dairy</span>
+          <span class="ht-date">Apr 19</span>
+          <span><button class="action-btn approve">View</button></span>
+        </div>
+        <div class="ht-row" onclick="loadDemo('almonds');showPage('dashboard')">
+          <span class="ht-product"><span style="font-size:1.2rem;">🥜</span>Roasted Almonds</span>
+          <span class="ht-score score-green">85</span>
+          <span class="ht-cat">Snacks</span>
+          <span class="ht-date">Apr 18</span>
+          <span><button class="action-btn approve">View</button></span>
+        </div>
+        <div class="ht-row" onclick="loadDemo('granola');showPage('dashboard')">
+          <span class="ht-product"><span style="font-size:1.2rem;">🍫</span>Chocolate Granola Bar</span>
+          <span class="ht-score score-yellow">61</span>
+          <span class="ht-cat">Snacks</span>
+          <span class="ht-date">Apr 17</span>
+          <span><button class="action-btn approve">View</button></span>
+        </div>
+        <div class="ht-row" onclick="loadDemo('chips');showPage('dashboard')">
+          <span class="ht-product"><span style="font-size:1.2rem;">🍟</span>Classic Potato Chips</span>
+          <span class="ht-score score-red">28</span>
+          <span class="ht-cat">Snacks</span>
+          <span class="ht-date">Apr 16</span>
+          <span><button class="action-btn approve">View</button></span>
+        </div>
+        <div class="ht-row" onclick="loadDemo('cola');showPage('dashboard')">
+          <span class="ht-product"><span style="font-size:1.2rem;">🥤</span>Cola Fizzy Drink</span>
+          <span class="ht-score score-red">15</span>
+          <span class="ht-cat">Beverages</span>
+          <span class="ht-date">Apr 15</span>
+          <span><button class="action-btn approve">View</button></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ ADMIN ═══════════════════ -->
+<div class="page" id="page-admin">
+  <div class="admin-wrap">
+    <div class="admin-header">
+      <h2>Admin Dashboard</h2>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <span style="font-size:.78rem;color:var(--ink3);">Last updated: Just now</span>
+        <button class="btn btn-outline btn-sm" onclick="showToast('Report generated!')">📊 Export Stats</button>
+      </div>
+    </div>
+
+    <div class="admin-stats">
+      <div class="admin-stat">
+        <div class="as-num">1,248</div>
+        <div class="as-label">Total Users</div>
+        <div class="as-change">↑ +12% this week</div>
+      </div>
+      <div class="admin-stat">
+        <div class="as-num">8,731</div>
+        <div class="as-label">Total Scans</div>
+        <div class="as-change">↑ +8% this week</div>
+      </div>
+      <div class="admin-stat">
+        <div class="as-num">342</div>
+        <div class="as-label">Products in DB</div>
+        <div class="as-change">↑ +5 new today</div>
+      </div>
+      <div class="admin-stat">
+        <div class="as-num">14</div>
+        <div class="as-label">Flagged Items</div>
+        <div class="as-change" style="color:var(--rose);">⚠ Needs review</div>
+      </div>
+    </div>
+
+    <!-- Quick chart -->
+    <div class="chart-card" style="margin-bottom:20px;">
+      <div class="chart-title">📊 Daily Scan Activity (This Week)</div>
+      <div class="bar-chart" style="height:120px;">
+        <div class="bar-group"><div class="bar" style="background:var(--emerald);height:60%"></div><div class="bar-label">Mon</div><div class="bar-val">312</div></div>
+        <div class="bar-group"><div class="bar" style="background:var(--emerald);height:80%"></div><div class="bar-label">Tue</div><div class="bar-val">425</div></div>
+        <div class="bar-group"><div class="bar" style="background:var(--emerald);height:55%"></div><div class="bar-label">Wed</div><div class="bar-val">289</div></div>
+        <div class="bar-group"><div class="bar" style="background:var(--emerald);height:90%"></div><div class="bar-label">Thu</div><div class="bar-val">481</div></div>
+        <div class="bar-group"><div class="bar" style="background:var(--amber);height:70%"></div><div class="bar-label">Fri</div><div class="bar-val">368</div></div>
+        <div class="bar-group"><div class="bar" style="background:var(--amber);height:45%"></div><div class="bar-label">Sat</div><div class="bar-val">238</div></div>
+        <div class="bar-group"><div class="bar" style="background:var(--amber);height:40%"></div><div class="bar-label">Sun</div><div class="bar-val">211</div></div>
+      </div>
+    </div>
+
+    <div class="admin-grid">
+      <div class="admin-table-card">
+        <div class="atc-header">
+          <h4>👤 Recent Users</h4>
+          <button class="btn btn-outline btn-sm">View All</button>
+        </div>
+        <div class="atc-row">
+          <span class="atc-name"><span class="status-dot status-active"></span>Priya Nair</span>
+          <span class="atc-meta">Joined today · 3 scans</span>
+          <button class="action-btn">Manage</button>
+        </div>
+        <div class="atc-row">
+          <span class="atc-name"><span class="status-dot status-active"></span>Rahul Menon</span>
+          <span class="atc-meta">Yesterday · 12 scans</span>
+          <button class="action-btn">Manage</button>
+        </div>
+        <div class="atc-row">
+          <span class="atc-name"><span class="status-dot status-warn"></span>Guest User #441</span>
+          <span class="atc-meta">Flagged for spam</span>
+          <button class="action-btn">Ban</button>
+        </div>
+        <div class="atc-row">
+          <span class="atc-name"><span class="status-dot status-active"></span>Amrita Pillai</span>
+          <span class="atc-meta">Apr 18 · 28 scans</span>
+          <button class="action-btn">Manage</button>
+        </div>
+        <div class="atc-row">
+          <span class="atc-name"><span class="status-dot status-active"></span>Kiran Das</span>
+          <span class="atc-meta">Apr 17 · 7 scans</span>
+          <button class="action-btn">Manage</button>
+        </div>
+      </div>
+
+      <div class="admin-table-card">
+        <div class="atc-header">
+          <h4>🚩 Flagged Products</h4>
+          <button class="btn btn-outline btn-sm">View All</button>
+        </div>
+        <div class="atc-row">
+          <span class="atc-name">🥤 Energy Blast Drink</span>
+          <span class="atc-meta">Incorrect data reported</span>
+          <button class="action-btn approve" onclick="showToast('Product approved!')">Approve</button>
+        </div>
+        <div class="atc-row">
+          <span class="atc-name">🍫 Dark Choco Bar</span>
+          <span class="atc-meta">Missing allergen info</span>
+          <button class="action-btn approve" onclick="showToast('Sent for review!')">Review</button>
+        </div>
+        <div class="atc-row">
+          <span class="atc-name">🍜 Instant Noodles</span>
+          <span class="atc-meta">Duplicate entry</span>
+          <button class="action-btn" onclick="showToast('Product removed!')">Remove</button>
+        </div>
+        <div class="atc-row">
+          <span class="atc-name">🧃 Mango Juice Pack</span>
+          <span class="atc-meta">Score mismatch</span>
+          <button class="action-btn approve" onclick="showToast('Recalculating...')">Recalc</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+!-- ═══════════════════ BARCODE SCANNER ═══════════════════ -->
+<div class="scanner-overlay" id="scannerOverlay">
+  <video id="scannerVideo" autoplay playsinline muted></video>
+
+  <div class="scanner-header">
+    <div class="scanner-title">📷 NutriScan — Barcode Scanner</div>
+    <button class="scanner-close-btn" onclick="closeScanner()">✕ Close</button>
+  </div>
+
+  <div class="scanner-frame-wrap">
+    <div class="scanner-frame"><div class="sf-br"></div></div>
+    <div class="scan-line"></div>
+    <div class="scanner-found-flash" id="foundFlash"></div>
+  </div>
+
+  <div class="scanner-footer">
+    <div class="scanner-status" id="scannerStatus">
+      <div class="status-pulse"></div>
+      <span id="scannerStatusText">Initialising camera…</span>
+    </div>
+    <div class="scanner-hint">Point your camera at any barcode on a food package.<br>Keep it steady — scanning happens automatically.</div>
+  </div>
+
+  <div class="scanner-error" id="scannerError">
+    <div class="scanner-error-icon">📵</div>
+    <h4>Camera Access Denied</h4>
+    <p>NutriScan needs camera permission to scan barcodes. Please allow camera access in your browser settings and try again.</p>
+    <button class="scanner-close-btn" style="margin-top:8px;" onclick="closeScanner()">Go Back</button>
+  </div>
+</div>
+  
+<!-- ═══════════════════ TOAST ═══════════════════ -->
+<div class="toast" id="toast">✅ Action completed!</div>
+
+<!-- ═══════════════════ MODAL ═══════════════════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3 id="modalTitle">Manual Entry</h3>
+    <div id="modalBody">
+      <div class="form-group"><label>Product Name</label><input class="form-input" placeholder="e.g. Whole Wheat Bread"/></div>
+      <div class="form-row">
+        <div class="form-group"><label>Calories (kcal)</label><input class="form-input" type="number" placeholder="250"/></div>
+        <div class="form-group"><label>Protein (g)</label><input class="form-input" type="number" placeholder="8"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Sugar (g)</label><input class="form-input" type="number" placeholder="3"/></div>
+        <div class="form-group"><label>Fat (g)</label><input class="form-input" type="number" placeholder="2"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Fibre (g)</label><input class="form-input" type="number" placeholder="5"/></div>
+        <div class="form-group"><label>Sodium (mg)</label><input class="form-input" type="number" placeholder="120"/></div>
+      </div>
+      <button class="form-submit" onclick="closeModal();showToast('🤖 AI analyzing your product...')">Analyze with AI →</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
