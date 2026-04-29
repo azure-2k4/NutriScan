@@ -23,8 +23,11 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/profile', require('./routes/profile.routes'));
 
-// Placeholder for Dev 2's Routes
-// app.use('/api/food', require('./routes/food.routes'));
+// Food Search & Caching Routes (Step 1 — Dev 2)
+app.use('/api/food', require('./routes/food.routes'));
+
+// Scan Pipeline Routes (Shared — Dev 2 mediator + Dev 3 scoring/AI)
+app.use('/api/scan', require('./routes/scan.routes'));
 
 // Placeholder for Dev 3's Routes
 // app.use('/api/scan', require('./routes/scan.routes'));

@@ -138,10 +138,17 @@ function setTab(el,mode){
   document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
   const input = document.getElementById('searchInput');
-  if(mode==='barcode'){input.placeholder='Enter barcode number...';}
-  else if(mode==='manual'){input.placeholder='Manual entry...';openModal();}
-  else{input.placeholder='Product name or barcode...';}
+  if(mode==='barcode'){
+    input.placeholder='Scanning via camera…';
+    openScanner();
+  } else if(mode==='manual'){
+    input.placeholder='Manual entry...';
+    openModal();
+  } else {
+    input.placeholder='Product name or barcode...';
+  }
 }
+
 /* ─── BARCODE SCANNER ───────────────────────── */
 let scannerCodeReader = null;
 let scannerStream = null;
