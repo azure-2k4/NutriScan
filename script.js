@@ -82,6 +82,28 @@ const products = {
   }
 };
 
+const NutriApi = {
+  // 1. Define your backend location here
+  BASE_URL: 'http://localhost:5000', 
+
+  headers: () => ({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
+  }),
+
+  async scanProduct(barcode) {
+    // 2. Use the BASE_URL in the fetch call
+    const response = await fetch(`${this.BASE_URL}/api/scan`, {
+      method: 'POST',
+      headers: this.headers(),
+      body: JSON.stringify({ barcode })
+    });
+    
+    if (!response.ok) throw new Error('Product analysis failed');
+    return await response.json();
+  }
+};
+
 /* ─── PAGE NAVIGATION ──────────────────────── */
 function showPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -94,31 +116,51 @@ function showPage(name){
 }
 
 /* ─── DEMO PRODUCT LOADING ─────────────────── */
-function loadDemo(key){
-  const p = products[key];
-  if(!p) return;
-  document.getElementById('rcIcon').textContent = p.icon;
-  document.getElementById('rcName').textContent = p.name;
-  document.getElementById('rcBrand').textContent = p.brand;
-  document.getElementById('rcTags').innerHTML = p.tags;
-  document.getElementById('rcScore').textContent = p.score;
-  document.getElementById('rcScore').className = 'big-score '+p.scoreClass;
-  const badge = document.getElementById('rcBadge');
-  badge.textContent = p.badge;
-  badge.className = 'big-badge '+p.badgeClass;
-  // Nutrition
-  const nt = document.getElementById('nutritionTable');
-  nt.innerHTML = p.nutrition.map(n=>`<div class="nt-cell"><div class="nt-val">${n.v}</div><div class="nt-label">${n.l}</div></div>`).join('');
-  // AI text
-  document.getElementById('aiText').textContent = p.ai;
-  // Alerts
-  const al = document.getElementById('allergenAlerts');
-  al.innerHTML = p.alerts.map(a=>`<div class="alert-row${a.type==='warn'?' warn':''}"><div class="alert-dot ${a.type}"></div><span class="alert-text">${a.text}</span></div>`).join('');
-  // Alternatives
-  document.getElementById('altGrid').innerHTML = p.alts.map(a=>`<div class="alt-card" onclick="loadDemo('${a.n.toLowerCase().replace(/\s+/g,'').replace(/[^a-z]/g,'')}')"><div class="alt-emoji">${a.e}</div><div class="alt-name">${a.n}</div><div class="alt-score">Score: ${a.s}</div></div>`).join('');
+// client/script.js
 
-  showPage('dashboard');
-  showToast(`🔍 Loaded: ${p.name}`);
+async function loadDemo(barcode) {
+  // 1. Show a loading state so the user knows the AI is thinking
+  showToast("🤖 AI is analyzing nutrition data...");
+  document.body.style.cursor = 'wait';
+
+  try {
+    // 2. Use the NutriApi to get real data from the Backend
+    // This triggers scoring.service.js and ai.service.js on the server
+    const data = await NutriApi.scanProduct(barcode);
+
+    // 3. Update the Result Card with REAL data
+    document.getElementById('rcName').textContent = data.productName;
+    document.getElementById('rcScore').textContent = data.score;
+    
+    // Dynamically set colors based on the D3 scoring service result
+    const scoreEl = document.getElementById('rcScore');
+    scoreEl.className = `big-score score-${data.colorFlag}`;
+    
+    const badgeEl = document.getElementById('rcBadge');
+    badgeEl.textContent = data.colorFlag.toUpperCase();
+    badgeEl.className = `big-badge badge-${data.colorFlag}`;
+
+    // 4. Update the AI Explanation (from ai.service.js)
+    document.getElementById('aiText').textContent = data.aiResult.explanation;
+
+    // 5. Update Alternatives
+    const altGrid = document.getElementById('altGrid');
+    altGrid.innerHTML = data.aiResult.alternatives.map(alt => `
+      <div class="alt-card">
+        <div class="alt-name">${alt.name}</div>
+        <div class="alt-score">${alt.reason}</div>
+      </div>
+    `).join('');
+
+    // 6. Switch view
+    showPage('dashboard');
+
+  } catch (err) {
+    console.error("Analysis Error:", err);
+    showToast("❌ Could not analyze product. Check connection.");
+  } finally {
+    document.body.style.cursor = 'default';
+  }
 }
 
 /* ─── SEARCH ───────────────────────────────── */
@@ -291,35 +333,61 @@ async function useBarcodeDetector(video){
 }
 
 /* ── On barcode detected ── */
-function onBarcodeDetected(code){
-  if(!scanActive) return;
+async function onBarcodeDetected(code) {
+  if (!scanActive) return;
   scanActive = false; // prevent double-fire
 
-  // Flash green on the scan window
+  // 1. Visual Feedback
   const flash = document.getElementById('foundFlash');
   flash.classList.add('flash');
-  setTimeout(()=> flash.classList.remove('flash'), 300);
+  setTimeout(() => flash.classList.remove('flash'), 300);
 
   setStatus(`✓ Barcode: ${code}`, false, true);
-  showToast(`📦 Barcode detected: ${code}`);
+  showToast(`📦 Barcode detected: ${code}. Analyzing...`);
 
-  setTimeout(()=>{
+  // 2. The API Transition
+  try {
+    // Close scanner early to show the dashboard/loading state
     closeScanner();
-    // Look up the barcode in our map
-    const key = barcodeMap[code];
-    if(key){
-      loadDemo(key);
-      showToast(`✅ Product found for barcode ${code}!`);
-    } else {
-      // Unknown barcode — show in search input and try text search
-      document.getElementById('searchInput').value = code;
-      showPage('dashboard');
-      showToast(`🔍 Barcode ${code} — not in demo DB. Try a known barcode.`);
-      // Show a hint of known barcodes
-      setTimeout(()=> showToast('💡 Try: 8901234567890 (Oats) or 4901234567890 (Cola)'), 3000);
-    }
-  }, 600);
+    showPage('dashboard');
+    
+    // Call NutriApi to hit the backend route /api/scan
+    // This triggers scoring.service and ai.service on the server
+    const analysis = await NutriApi.scanProduct(code);
+
+    // 3. Update the Dashboard with REAL data
+    updateDashboardUI(analysis);
+    
+    showToast(`✅ ${analysis.productName} analyzed successfully!`);
+
+  } catch (err) {
+    console.error("Scan analysis failed:", err);
+    showToast("❌ Product not found or server error. Try manual entry.");
+    
+    // Fallback: put the code in the search bar if API fails
+    document.getElementById('searchInput').value = code;
+    scanActive = true; 
+  }
 }
+
+// Helper to keep the scan function clean
+function updateDashboardUI(data) {
+  document.getElementById('rcName').textContent = data.productName;
+  document.getElementById('rcScore').textContent = data.score;
+  
+  // Set colors based on the colorFlag returned by scoring.service.js
+  const scoreEl = document.getElementById('rcScore');
+  scoreEl.className = `big-score score-${data.colorFlag}`;
+  
+  const badgeEl = document.getElementById('rcBadge');
+  badgeEl.textContent = data.colorFlag === 'green' ? '🟢 Excellent' : 
+                       data.colorFlag === 'yellow' ? '🟡 Moderate' : '🔴 Avoid';
+  badgeEl.className = `big-badge badge-${data.colorFlag}`;
+
+  // AI Explanation from ai.service.js
+  document.getElementById('aiText').textContent = data.aiResult.explanation;
+}
+
 
 /* ── Fallback: show manual barcode entry in scanner footer ── */
 function showManualBarcodePrompt(){
