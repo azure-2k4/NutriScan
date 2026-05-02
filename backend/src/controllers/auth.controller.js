@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Profile = require('../models/Profile');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const sendEmail = require('../services/email.service');
@@ -25,7 +26,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 // @access  Public
 exports.register = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, age, gender, healthGoal, allergies } = req.body;
 
     // Check if user exists
     const userExists = await User.findOne({ email });
@@ -37,7 +38,16 @@ exports.register = async (req, res, next) => {
       name,
       email,
       password,
-      isVerified: true // Email verification temporarily bypassed
+      isVerified: true 
+    });
+
+    // Create default profile
+    await Profile.create({
+      userId: user._id,
+      age: age || 25,
+      gender: gender || 'other',
+      healthGoals: healthGoal ? [healthGoal] : ['eat_healthier'],
+      allergies: allergies || []
     });
 
     sendTokenResponse(user, 201, res);
@@ -94,7 +104,7 @@ exports.login = async (req, res, next) => {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
 
-    // Email verification temporarily disabled
+    // Email verification for later
     // if (!user.isVerified) {
     //   return res.status(401).json({ success: false, message: 'Please verify your email before logging in' });
     // }

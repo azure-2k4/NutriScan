@@ -35,7 +35,7 @@ exports.upsertProfile = async (req, res, next) => {
 // @access  Private
 exports.getProfile = async (req, res, next) => {
   try {
-    const profile = await Profile.findOne({ userId: req.user.id });
+    const profile = await Profile.findOne({ userId: req.user.id }).populate('userId', 'name email createdAt');
 
     if (!profile) {
       return res.status(404).json({ success: false, message: 'There is no profile for this user' });

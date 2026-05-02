@@ -6,9 +6,9 @@ const morgan = require('morgan');
 const app = express();
 
 // Middleware
-app.use(helmet());
+// app.use(helmet());
 app.use(cors({
-  origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
+  origin: true, // Allow all origins for local dev
   credentials: true
 }));
 app.use(express.json());
@@ -29,9 +29,8 @@ app.use('/api/food', require('./routes/food.routes'));
 // Scan Pipeline Routes (Shared — Dev 2 mediator + Dev 3 scoring/AI)
 app.use('/api/scan', require('./routes/scan.routes'));
 
-// Placeholder for Dev 3's Routes
-// app.use('/api/scan', require('./routes/scan.routes'));
-// app.use('/api/admin', require('./routes/admin.routes'));
+// Admin Routes
+app.use('/api/admin', require('./routes/admin.routes'));
 
 // Global Error Handler
 app.use((err, req, res, next) => {

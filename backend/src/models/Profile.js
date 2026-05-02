@@ -32,7 +32,7 @@ const ProfileSchema = new mongoose.Schema({
   },
   healthGoals: [{
     type: String,
-    enum: ['weight_loss', 'muscle_gain', 'maintenance', 'eat_healthier', 'manage_condition']
+    enum: ['weight_loss', 'muscle_gain', 'maintenance', 'eat_healthier', 'manage_condition', 'diabetes_management', 'general_wellness']
   }],
   conditions: [{
     type: String,

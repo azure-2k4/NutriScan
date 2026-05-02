@@ -121,4 +121,10 @@ router.get(
   controller.getScanHistory
 );
 
+router.get(
+  '/history/:id',
+  protect,
+  controller.getScanHistoryItem
+);
+
 module.exports = router;

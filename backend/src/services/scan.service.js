@@ -42,6 +42,7 @@
 
 const cacheService = require('./productCache.service');
 const Profile      = require('../models/Profile');
+const ScanHistory  = require('../models/ScanHistory');
 
 // ── Dev 3 plug-in points ───────────────────────────────────
 // These are imported lazily inside runScan() so the server
@@ -272,7 +273,7 @@ const runScan = async (barcode, userId) => {
   }
 
   // ── Assemble final result ──────────────────────────────
-  return {
+  const assembled = {
     success: true,
 
     // ── Product data (Dev 2) ────────────────────────────
@@ -315,6 +316,35 @@ const runScan = async (barcode, userId) => {
     cacheLevel,
     dataCompleteness: product.dataCompleteness,
   };
+
+  // ── Step 5: Save Scan History (Dev 3 & Dev 2 integration) ──
+  try {
+    await ScanHistory.create({
+      userId,
+      barcode: assembled.product.barcode,
+      productName: assembled.product.name,
+      brand: assembled.product.brand,
+      imageUrl: assembled.product.imageUrl,
+      score: assembled.score,
+      colorFlag: assembled.colorFlag,
+      explanation: assembled.explanation,
+      alternatives: assembled.alternatives,
+      nutrition: {
+        calories: assembled.product.nutrition.calories,
+        protein: assembled.product.nutrition.protein,
+        sugar: assembled.product.nutrition.sugar,
+        fat: assembled.product.nutrition.fat,
+        fibre: assembled.product.nutrition.fibre,
+        carbs: assembled.product.nutrition.carbohydrates,
+        sodium: assembled.product.nutrition.sodium,
+      }
+    });
+  } catch (err) {
+    console.error('[ScanService] Failed to save scan history:', err.message);
+    // Don't fail the whole request if history save fails
+  }
+
+  return assembled;
 };
 
 module.exports = {
