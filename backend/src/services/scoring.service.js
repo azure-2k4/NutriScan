@@ -9,11 +9,11 @@ exports.score = async ({ product, profile }) => {
   let score = 100;
   const deductions = [];
 
-  const nutrients = product.nutriments || {};
+  const nutrients = product.nutrition || {};
   const goals = profile.healthGoals || [];
 
   // 1. SUGAR DEDUCTIONS (Impacts Weight Loss & Diabetes)
-  const sugar = nutrients.sugars_100g || 0;
+  const sugar = nutrients.sugar || 0;
   if (sugar > 10) {
     const penalty = goals.includes('Diabetes Management') ? 30 : 15;
     score -= penalty;
@@ -21,15 +21,15 @@ exports.score = async ({ product, profile }) => {
   }
 
   // 2. SODIUM DEDUCTIONS (Impacts Heart Health)
-  const sodium = nutrients.sodium_100g || 0;
+  const sodium = nutrients.sodium || 0;
   if (sodium > 0.5) {
     score -= 15;
     deductions.push({ type: 'Sodium', value: sodium, penalty: 15 });
   }
 
   // 3. PROTEIN/FIBRE BONUSES (Reward healthy components)
-  const protein = nutrients.proteins_100g || 0;
-  const fibre = nutrients.fiber_100g || 0;
+  const protein = nutrients.protein || 0;
+  const fibre = nutrients.fibre || 0;
   if (protein > 10 || fibre > 5) {
     score += 10; // Positive reinforcement
   }

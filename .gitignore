@@ -3,3 +3,4 @@ backend/.env
 *.log
 env
 .env
+node_modules/

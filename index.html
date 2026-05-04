@@ -178,6 +178,12 @@
         <div class="mpc-brand">NutHouse</div>
         <div class="mpc-score"><span class="dot dot-green"></span>Score: 85</div>
       </div>
+      <div class="mini-product-card reveal-scale d7" onclick="loadDemo('kitkat')">
+        <div class="mpc-icon mpc-img"><img src="https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?auto=format&fit=crop&q=80&w=88&h=88" alt="KitKat"/></div>
+        <div class="mpc-name">KitKat Milk Chocolate</div>
+        <div class="mpc-brand">Nestlé</div>
+        <div class="mpc-score"><span class="dot dot-yellow"></span>Score: 48</div>
+      </div>
     </div>
   </section>
 </div>
@@ -313,6 +319,7 @@
         <div class="user-name">Guest User</div>
         <div class="user-meta">Not signed in</div>
         <div class="user-badges"></div>
+        <button class="logout-btn" id="logoutBtn" onclick="logout()" style="display:none;">Sign Out</button>
       </div>
 
       <div class="search-card">
@@ -357,63 +364,44 @@
 
     <!-- Main Content -->
     <div class="main-content">
+      <!-- Empty State (shown before any scan) -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-state-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="48" height="48"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+        </div>
+        <h3>Scan or search a product</h3>
+        <p>Use the search bar above to look up any food product by name or barcode. Your nutrition analysis will appear here.</p>
+      </div>
+
       <!-- Product Result -->
-      <div class="result-card" id="resultCard">
+      <div class="result-card" id="resultCard" style="display:none;">
         <div class="rc-header">
-          <div class="rc-icon" id="rcIcon">
-            <img class="rc-icon-img" src="/oat.webp" alt="Rolled Oats"/>
-          </div>
+          <div class="rc-icon" id="rcIcon"></div>
           <div class="rc-info">
-            <div class="rc-name" id="rcName">Rolled Oats Original</div>
-            <div class="rc-brand" id="rcBrand">GrainCo · Barcode: 8901234567890</div>
-            <div class="rc-tags" id="rcTags">
-              <span class="tag tag-veg">Vegetarian</span>
-              <span class="tag tag-veg">Gluten Free</span>
-              <span class="tag tag-sugar">Low Sugar</span>
-            </div>
+            <div class="rc-name" id="rcName">—</div>
+            <div class="rc-brand" id="rcBrand">—</div>
+            <div class="rc-tags" id="rcTags"></div>
           </div>
           <div class="rc-score-area">
-            <div class="big-score score-green" id="rcScore">92</div>
+            <div class="big-score" id="rcScore">—</div>
             <div class="score-out-of">/ 100</div>
-            <span class="big-badge badge-green" id="rcBadge">Excellent</span>
+            <span class="big-badge" id="rcBadge">—</span>
             <button class="save-btn" onclick="toggleFav(this)">Save</button>
           </div>
         </div>
 
-        <div class="nutrition-table" id="nutritionTable">
-          <div class="nt-cell"><div class="nt-val">379</div><div class="nt-label">Calories (kcal)</div></div>
-          <div class="nt-cell"><div class="nt-val">17g</div><div class="nt-label">Protein</div></div>
-          <div class="nt-cell"><div class="nt-val">1g</div><div class="nt-label">Sugar</div></div>
-          <div class="nt-cell"><div class="nt-val">7g</div><div class="nt-label">Fat</div></div>
-          <div class="nt-cell"><div class="nt-val">10g</div><div class="nt-label">Fibre</div></div>
-          <div class="nt-cell"><div class="nt-val">66g</div><div class="nt-label">Carbs</div></div>
-          <div class="nt-cell"><div class="nt-val">2mg</div><div class="nt-label">Sodium</div></div>
-          <div class="nt-cell"><div class="nt-val">None</div><div class="nt-label">Additives</div></div>
-        </div>
+        <div class="nutrition-table" id="nutritionTable"></div>
 
         <div class="ai-explanation" id="aiExplanation">
           <span class="ai-icon">AI</span>
-          <div class="ai-text" id="aiText">Excellent choice. Rolled oats are a whole grain powerhouse — high in beta-glucan fibre which helps lower cholesterol and regulate blood sugar. Perfect for your diabetes management goal. Low glycemic index, minimal processing, and no added sugar make this a top-rated breakfast option.</div>
+          <div class="ai-text" id="aiText"></div>
         </div>
 
         <div class="allergen-alerts" id="allergenAlerts"></div>
 
         <div class="alternatives">
           <h4>Healthier Alternatives</h4>
-          <div class="alt-grid" id="altGrid">
-            <div class="alt-card" onclick="loadDemo('almonds')">
-              <div class="alt-icon alt-img"><img src="https://images.unsplash.com/photo-1508061253366-f7da158b6d46?auto=format&fit=crop&q=80&w=68&h=68" alt="Almonds"/></div>
-              <div class="alt-info"><div class="alt-name">Roasted Almonds</div><div class="alt-score">Score: 85</div></div>
-            </div>
-            <div class="alt-card">
-              <div class="alt-icon alt-img"><img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&q=80&w=68&h=68" alt="Blueberry Oat Cup"/></div>
-              <div class="alt-info"><div class="alt-name">Blueberry Overnight Oats</div><div class="alt-score">Score: 89</div></div>
-            </div>
-            <div class="alt-card">
-              <div class="alt-icon alt-img"><img src="https://images.unsplash.com/photo-1481349518771-20055b2a7b24?auto=format&fit=crop&q=80&w=68&h=68" alt="Banana Wheat Flakes"/></div>
-              <div class="alt-info"><div class="alt-name">Banana Wheat Flakes</div><div class="alt-score">Score: 79</div></div>
-            </div>
-          </div>
+          <div class="alt-grid" id="altGrid"></div>
         </div>
       </div>
 
@@ -424,13 +412,13 @@
           <button class="btn btn-outline btn-sm" onclick="showPage('history')">View Full Analytics</button>
         </div>
         <div class="bar-chart" id="dashBarChart">
-          <div class="bar-group"><div class="bar" data-h="60%" style="background:var(--emerald);height:0"></div><div class="bar-label">Mon</div><div class="bar-val">65</div></div>
-          <div class="bar-group"><div class="bar" data-h="72%" style="background:var(--emerald);height:0"></div><div class="bar-label">Tue</div><div class="bar-val">78</div></div>
-          <div class="bar-group"><div class="bar" data-h="55%" style="background:var(--amber);height:0"></div><div class="bar-label">Wed</div><div class="bar-val">60</div></div>
-          <div class="bar-group"><div class="bar" data-h="80%" style="background:var(--emerald);height:0"></div><div class="bar-label">Thu</div><div class="bar-val">84</div></div>
-          <div class="bar-group"><div class="bar" data-h="68%" style="background:var(--emerald);height:0"></div><div class="bar-label">Fri</div><div class="bar-val">72</div></div>
-          <div class="bar-group"><div class="bar" data-h="50%" style="background:var(--amber);height:0"></div><div class="bar-label">Sat</div><div class="bar-val">55</div></div>
-          <div class="bar-group"><div class="bar" data-h="85%" style="background:var(--emerald);height:0"></div><div class="bar-label">Sun</div><div class="bar-val">91</div></div>
+          <div class="bar-group"><div class="bar" style="height:0"></div><div class="bar-label">Mon</div><div class="bar-val"></div></div>
+          <div class="bar-group"><div class="bar" style="height:0"></div><div class="bar-label">Tue</div><div class="bar-val"></div></div>
+          <div class="bar-group"><div class="bar" style="height:0"></div><div class="bar-label">Wed</div><div class="bar-val"></div></div>
+          <div class="bar-group"><div class="bar" style="height:0"></div><div class="bar-label">Thu</div><div class="bar-val"></div></div>
+          <div class="bar-group"><div class="bar" style="height:0"></div><div class="bar-label">Fri</div><div class="bar-val"></div></div>
+          <div class="bar-group"><div class="bar" style="height:0"></div><div class="bar-label">Sat</div><div class="bar-val"></div></div>
+          <div class="bar-group"><div class="bar" style="height:0"></div><div class="bar-label">Sun</div><div class="bar-val"></div></div>
         </div>
       </div>
     </div>
@@ -535,7 +523,10 @@
         <p class="section-label">Your Nutrition Journey</p>
         <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--ink);">History &amp; Analytics</div>
       </div>
-      <button class="btn btn-outline btn-sm" onclick="downloadAdminReport()">Export Report</button>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-outline btn-sm" onclick="refreshHistory(); showToast('History refreshed...');">Refresh Data</button>
+        <button class="btn btn-outline btn-sm" onclick="downloadAdminReport()">Export Report</button>
+      </div>
     </div>
 
     <div class="analytics-grid">
@@ -614,37 +605,37 @@
 
     <div class="admin-stats">
       <div class="admin-stat reveal d1">
-        <div class="as-num" data-count="1248">1,248</div>
+        <div class="as-num" data-count="0">—</div>
         <div class="as-label">Total Users</div>
-        <div class="as-change">+12% this week</div>
+        <div class="as-change" id="adminChangeUsers">—</div>
       </div>
       <div class="admin-stat reveal d2">
-        <div class="as-num" data-count="8731">8,731</div>
+        <div class="as-num" data-count="0">—</div>
         <div class="as-label">Total Scans</div>
-        <div class="as-change">+8% this week</div>
+        <div class="as-change" id="adminChangeScans">—</div>
       </div>
       <div class="admin-stat reveal d3">
-        <div class="as-num" data-count="342">342</div>
+        <div class="as-num" data-count="0">—</div>
         <div class="as-label">Products in DB</div>
-        <div class="as-change">+5 new today</div>
+        <div class="as-change" id="adminChangeProducts">—</div>
       </div>
       <div class="admin-stat reveal d4">
-        <div class="as-num" data-count="14">14</div>
+        <div class="as-num" data-count="0">—</div>
         <div class="as-label">Flagged Items</div>
-        <div class="as-change as-change-warn">Needs review</div>
+        <div class="as-change as-change-warn" id="adminChangeFlagged">—</div>
       </div>
     </div>
 
     <div class="chart-card reveal" style="margin-bottom:20px;">
       <div class="chart-title">Daily Scan Activity — This Week</div>
       <div class="bar-chart" id="adminBarChart" style="height:120px;">
-        <div class="bar-group"><div class="bar" data-h="60%" style="background:var(--emerald);height:0"></div><div class="bar-label">Mon</div><div class="bar-val">312</div></div>
-        <div class="bar-group"><div class="bar" data-h="80%" style="background:var(--emerald);height:0"></div><div class="bar-label">Tue</div><div class="bar-val">425</div></div>
-        <div class="bar-group"><div class="bar" data-h="55%" style="background:var(--emerald);height:0"></div><div class="bar-label">Wed</div><div class="bar-val">289</div></div>
-        <div class="bar-group"><div class="bar" data-h="90%" style="background:var(--emerald);height:0"></div><div class="bar-label">Thu</div><div class="bar-val">481</div></div>
-        <div class="bar-group"><div class="bar" data-h="70%" style="background:var(--amber);height:0"></div><div class="bar-label">Fri</div><div class="bar-val">368</div></div>
-        <div class="bar-group"><div class="bar" data-h="45%" style="background:var(--amber);height:0"></div><div class="bar-label">Sat</div><div class="bar-val">238</div></div>
-        <div class="bar-group"><div class="bar" data-h="40%" style="background:var(--amber);height:0"></div><div class="bar-label">Sun</div><div class="bar-val">211</div></div>
+        <div class="bar-group"><div class="bar" data-h="0%" style="background:var(--emerald);height:0"></div><div class="bar-label">Mon</div><div class="bar-val">—</div></div>
+        <div class="bar-group"><div class="bar" data-h="0%" style="background:var(--emerald);height:0"></div><div class="bar-label">Tue</div><div class="bar-val">—</div></div>
+        <div class="bar-group"><div class="bar" data-h="0%" style="background:var(--emerald);height:0"></div><div class="bar-label">Wed</div><div class="bar-val">—</div></div>
+        <div class="bar-group"><div class="bar" data-h="0%" style="background:var(--emerald);height:0"></div><div class="bar-label">Thu</div><div class="bar-val">—</div></div>
+        <div class="bar-group"><div class="bar" data-h="0%" style="background:var(--amber);height:0"></div><div class="bar-label">Fri</div><div class="bar-val">—</div></div>
+        <div class="bar-group"><div class="bar" data-h="0%" style="background:var(--amber);height:0"></div><div class="bar-label">Sat</div><div class="bar-val">—</div></div>
+        <div class="bar-group"><div class="bar" data-h="0%" style="background:var(--amber);height:0"></div><div class="bar-label">Sun</div><div class="bar-val">—</div></div>
       </div>
     </div>
 
@@ -654,30 +645,8 @@
           <h4>Recent Users</h4>
           <button class="btn btn-outline btn-sm">View All</button>
         </div>
-        <div class="atc-row">
-          <span class="atc-name"><span class="status-dot status-active"></span>Priya Nair</span>
-          <span class="atc-meta">Joined today · 3 scans</span>
-          <button class="action-btn">Manage</button>
-        </div>
-        <div class="atc-row">
-          <span class="atc-name"><span class="status-dot status-active"></span>Rahul Menon</span>
-          <span class="atc-meta">Yesterday · 12 scans</span>
-          <button class="action-btn">Manage</button>
-        </div>
-        <div class="atc-row">
-          <span class="atc-name"><span class="status-dot status-warn"></span>Guest User #441</span>
-          <span class="atc-meta">Flagged for spam</span>
-          <button class="action-btn">Ban</button>
-        </div>
-        <div class="atc-row">
-          <span class="atc-name"><span class="status-dot status-active"></span>Amrita Pillai</span>
-          <span class="atc-meta">Apr 18 · 28 scans</span>
-          <button class="action-btn">Manage</button>
-        </div>
-        <div class="atc-row">
-          <span class="atc-name"><span class="status-dot status-active"></span>Kiran Das</span>
-          <span class="atc-meta">Apr 17 · 7 scans</span>
-          <button class="action-btn">Manage</button>
+        <div id="adminUsersList">
+          <div style="padding:20px;text-align:center;color:var(--ink3);font-size:.85rem;">Loading users...</div>
         </div>
       </div>
 
@@ -686,25 +655,8 @@
           <h4>Flagged Products</h4>
           <button class="btn btn-outline btn-sm">View All</button>
         </div>
-        <div class="atc-row">
-          <span class="atc-name">Energy Blast Drink</span>
-          <span class="atc-meta">Incorrect data reported</span>
-          <button class="action-btn approve" onclick="showToast('Product approved')">Approve</button>
-        </div>
-        <div class="atc-row">
-          <span class="atc-name">Dark Choco Bar</span>
-          <span class="atc-meta">Missing allergen info</span>
-          <button class="action-btn approve" onclick="showToast('Sent for review')">Review</button>
-        </div>
-        <div class="atc-row">
-          <span class="atc-name">Instant Noodles</span>
-          <span class="atc-meta">Duplicate entry</span>
-          <button class="action-btn" onclick="showToast('Product removed')">Remove</button>
-        </div>
-        <div class="atc-row">
-          <span class="atc-name">Mango Juice Pack</span>
-          <span class="atc-meta">Score mismatch</span>
-          <button class="action-btn approve" onclick="showToast('Recalculating...')">Recalc</button>
+        <div id="adminFlaggedList">
+          <div style="padding:20px;text-align:center;color:var(--ink3);font-size:.85rem;">Loading flagged items...</div>
         </div>
       </div>
     </div>

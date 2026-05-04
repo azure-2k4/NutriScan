@@ -8,10 +8,10 @@ const products = {
       {v:'379',l:'Calories (kcal)'},{v:'17g',l:'Protein'},{v:'1g',l:'Sugar'},{v:'7g',l:'Fat'},
       {v:'10g',l:'Fibre'},{v:'66g',l:'Carbs'},{v:'2mg',l:'Sodium'},{v:'None',l:'Additives'}
     ],
-    img: '/oat.webp',
+    img: 'oat.webp',
     ai:"Excellent choice. Rolled oats are a whole grain powerhouse — high in beta-glucan fibre which helps lower cholesterol and regulate blood sugar. Perfect for your diabetes management goal. Low glycemic index, minimal processing, and no added sugar make this a top-rated breakfast option.",
     alerts:[],
-    alts:[{n:'Roasted Almonds',s:85,icon:'RA',img:'https://images.unsplash.com/photo-1508061253366-f7da158b6d46?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--emerald-light)',col:'var(--emerald)'},{n:'Blueberry Oat Cup',s:89,icon:'BO',img:'https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--emerald-light)',col:'var(--emerald)'},{n:'Banana Wheat Flakes',s:79,icon:'BW',img:'https://images.unsplash.com/photo-1481349518771-20055b2a7b24?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--amber-light)',col:'var(--amber)'}]
+    alts:[{key:'almonds',n:'Roasted Almonds',s:85,icon:'RA',img:'https://images.unsplash.com/photo-1508061253366-f7da158b6d46?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--emerald-light)',col:'var(--emerald)'},{n:'Blueberry Oat Cup',s:89,icon:'BO',img:'https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--emerald-light)',col:'var(--emerald)'},{n:'Banana Wheat Flakes',s:79,icon:'BW',img:'https://images.unsplash.com/photo-1481349518771-20055b2a7b24?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--amber-light)',col:'var(--amber)'}]
   },
   yogurt:{
     name:'Greek Yogurt Plain',brand:'DairyCo · Barcode: 8900012345678',
@@ -68,10 +68,10 @@ const products = {
       {v:'210',l:'Calories (kcal)'},{v:'5g',l:'Protein'},{v:'14g',l:'Sugar'},{v:'8g',l:'Fat'},
       {v:'3g',l:'Fibre'},{v:'30g',l:'Carbs'},{v:'95mg',l:'Sodium'},{v:'Some',l:'Additives'}
     ],
-    img: '/choco.jpeg',
+    img: 'choco.jpeg',
     ai:"A decent snack option but not ideal for your goals. The chocolate adds flavour but also increases added sugar content. Has some fibre and protein which moderates the blood sugar impact. Occasional consumption is fine, but there are significantly better snack alternatives for diabetes management.",
     alerts:[{type:'warn',text:'Contains 14g of sugar — monitor portion size carefully'},{type:'warn',text:'May contain traces of peanuts — allergen risk'}],
-    alts:[{n:'Rolled Oats',s:92,icon:'RO',img:'/oat.webp',bg:'var(--emerald-light)',col:'var(--emerald)'},{n:'Roasted Almonds',s:85,icon:'RA',img:'https://images.unsplash.com/photo-1508061253366-f7da158b6d46?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--emerald-light)',col:'var(--emerald)'},{n:'Fresh Banana',s:88,icon:'FB',img:'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--amber-light)',col:'var(--amber)'}]
+    alts:[{key:'oats',n:'Rolled Oats',s:92,icon:'RO',img:'oat.webp',bg:'var(--emerald-light)',col:'var(--emerald)'},{key:'almonds',n:'Roasted Almonds',s:85,icon:'RA',img:'https://images.unsplash.com/photo-1508061253366-f7da158b6d46?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--emerald-light)',col:'var(--emerald)'},{n:'Fresh Banana',s:88,icon:'FB',img:'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--amber-light)',col:'var(--amber)'}]
   },
   almonds:{
     name:'Roasted Almonds (Unsalted)',brand:'NutHouse · Barcode: 3456789012345',
@@ -102,6 +102,19 @@ const products = {
       {type:'warn',text:'Contains Hazelnuts and Milk — major allergens'}
     ],
     alts:[{n:'Almond Butter',s:82,icon:'AB',img:'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--emerald-light)',col:'var(--emerald)'},{n:'Peanut Butter (Unsweetened)',s:75,icon:'PB',img:'https://images.unsplash.com/photo-1581447100595-3773bc4f0aa9?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--emerald-light)',col:'var(--emerald)'},{n:'Dark Chocolate (85%)',s:68,icon:'DC',img:'https://images.unsplash.com/photo-1515023115689-589c33041d3c?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--amber-light)',col:'var(--amber)'}]
+  },
+  kitkat:{
+    name:'KitKat Milk Chocolate',brand:'Nestlé · Barcode: 7613032707717',
+    score:48,badge:'Moderate',badgeClass:'badge-yellow',scoreClass:'score-yellow',
+    tags:'<span class="tag tag-sugar">Moderate Sugar</span><span class="tag tag-veg">Vegetarian</span>',
+    nutrition:[
+      {v:'215',l:'Calories (kcal)'},{v:'3.1g',l:'Protein'},{v:'21.5g',l:'Sugar'},{v:'11g',l:'Fat'},
+      {v:'0.9g',l:'Fibre'},{v:'27.5g',l:'Carbs'},{v:'29mg',l:'Sodium'},{v:'Some',l:'Additives'}
+    ],
+    img: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd33e2d?auto=format&fit=crop&q=80&w=200&h=200',
+    ai:"A classic chocolate wafer bar with moderate nutrition profile. While it contains significant added sugar (21.5g per bar), the wafer structure provides some carbohydrates and a small amount of protein. Not ideal for weight loss or diabetes management, but acceptable as an occasional treat. Better options available for snacking.",
+    alerts:[{type:'warn',text:'Contains 21.5g sugar per bar — high added sugar content'},{type:'warn',text:'Contains milk and soy — allergen risk'}],
+    alts:[{n:'Dark Chocolate (70%)',s:72,icon:'DC',img:'https://images.unsplash.com/photo-1515023115689-589c33041d3c?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--amber-light)',col:'var(--amber)'},{n:'Granola Bar (Oat)',s:74,icon:'GB',img:'https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--amber-light)',col:'var(--amber)'},{n:'Protein Bar',s:80,icon:'PB',img:'https://images.unsplash.com/photo-1590901896967-aa6ff2b24244?auto=format&fit=crop&q=80&w=120&h=120',bg:'var(--emerald-light)',col:'var(--emerald)'}]
   }
 };
 
@@ -417,6 +430,50 @@ function updateHistoryAnalytics(items) {
       vals[i].textContent = avg;
     }
   });
+  
+  /* Update Dashboard Weekly Chart (Latest 7 days) */
+  const dashBars = document.querySelectorAll('#dashBarChart .bar');
+  const dashVals = document.querySelectorAll('#dashBarChart .bar-val');
+  const dashLabels = document.querySelectorAll('#dashBarChart .bar-label');
+  
+  if (dashBars.length) {
+    const last7Days = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(now);
+      d.setDate(d.getDate() - (6 - i));
+      d.setHours(0,0,0,0);
+      
+      const dayItems = items.filter(it => {
+        const itDate = new Date(it.createdAt);
+        itDate.setHours(0,0,0,0);
+        return itDate.getTime() === d.getTime();
+      });
+      
+      const avg = dayItems.length
+        ? Math.round(dayItems.reduce((s, it) => s + (it.score || 0), 0) / dayItems.length)
+        : null;
+        
+      return {
+        avg,
+        label: d.toLocaleDateString(undefined, { weekday: 'short' })
+      };
+    });
+
+    last7Days.forEach((day, i) => {
+      if (!dashBars[i]) return;
+      if (dashLabels[i]) dashLabels[i].textContent = day.label;
+      
+      if (day.avg === null) {
+        dashBars[i].dataset.h = '4%';
+        dashBars[i].style.background = 'var(--border)';
+        if (dashVals[i]) dashVals[i].textContent = '—';
+      } else {
+        const h = Math.max(Math.round(day.avg), 8) + '%';
+        dashBars[i].dataset.h = h;
+        dashBars[i].style.background = day.avg >= 70 ? 'var(--emerald)' : day.avg >= 40 ? 'var(--amber)' : 'var(--rose)';
+        if (dashVals[i]) dashVals[i].textContent = day.avg;
+      }
+    });
+  }
 }
 
 /* ─── Clear sidebar mock data (not logged in) ── */
@@ -477,29 +534,34 @@ async function refreshAdminPage() {
     }
 
     /* Update user list if API returned data */
+    const usersList = document.getElementById('adminUsersList');
     if (usersRes.status === 'fulfilled' && usersRes.value?.data?.length) {
       const users = usersRes.value.data;
-      const usersContainer = document.querySelector('.admin-table-card:first-of-type .atc-row')?.parentElement;
-      if (usersContainer) {
-        const header = usersContainer.querySelector('.atc-header');
-        usersContainer.innerHTML = '';
-        if (header) usersContainer.appendChild(header);
-        users.forEach(u => {
-          const row = document.createElement('div');
-          row.className = 'atc-row';
-          row.innerHTML = `
+      if (usersList) {
+        usersList.innerHTML = users.map(u => `
+          <div class="atc-row">
             <span class="atc-name"><span class="status-dot status-active"></span>${u.name || 'Unknown'}</span>
             <span class="atc-meta">${formatRelativeDate(u.createdAt)} · ${u.scanCount || 0} scans</span>
-            <button class="action-btn">Manage</button>`;
-          usersContainer.appendChild(row);
-        });
+            <button class="action-btn">Manage</button>
+          </div>`).join('');
       }
+    } else {
+      if (usersList) usersList.innerHTML = '<div style="padding:20px;text-align:center;color:var(--ink3);font-size:.85rem;">No users found</div>';
     }
+
+    /* Flagged list — show empty state if API has no flagged data */
+    const flaggedList = document.getElementById('adminFlaggedList');
+    if (flaggedList) flaggedList.innerHTML = '<div style="padding:20px;text-align:center;color:var(--ink3);font-size:.85rem;">No flagged items</div>';
+
   } catch (err) {
-    console.warn('Admin API unavailable — showing demo data');
+    console.warn('Admin API unavailable');
     document.getElementById('adminDemoNote')?.classList.add('show');
     const lastUpdated = document.getElementById('adminLastUpdated');
-    if (lastUpdated) lastUpdated.textContent = 'Showing demo data';
+    if (lastUpdated) lastUpdated.textContent = 'API unavailable';
+    const usersList = document.getElementById('adminUsersList');
+    if (usersList) usersList.innerHTML = '<div style="padding:20px;text-align:center;color:var(--ink3);font-size:.85rem;">Could not load users</div>';
+    const flaggedList = document.getElementById('adminFlaggedList');
+    if (flaggedList) flaggedList.innerHTML = '<div style="padding:20px;text-align:center;color:var(--ink3);font-size:.85rem;">Could not load flagged items</div>';
   }
 }
 
@@ -507,6 +569,26 @@ async function refreshAdminPage() {
    PAGE NAVIGATION
    ═══════════════════════════════════════════════ */
 function showPage(name) {
+  /* Check admin access control */
+  if (name === 'admin' && currentUserRole !== 'admin') {
+    showToast('Admin access denied. Only administrators can access this page.');
+    showPage('dashboard');
+    return;
+  }
+
+  /* Guest users cannot access history and profile pages */
+  if ((name === 'history' || name === 'profile') && !localStorage.getItem('token')) {
+    showToast('Please sign in to access this section.');
+    showPage('dashboard');
+    return;
+  }
+
+  /* Logged-in users should not see the landing page */
+  if (name === 'landing' && localStorage.getItem('token')) {
+    showPage('dashboard');
+    return;
+  }
+
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
   const page = document.getElementById('page-' + name);
@@ -541,33 +623,62 @@ function showPage(name) {
    DEMO PRODUCT LOADING
    ═══════════════════════════════════════════════ */
 let _loadDemoSeq = 0; // race-condition guard
+let currentUserRole = null; // track user role for admin access control
 
 async function loadDemo(key) {
   const seq = ++_loadDemoSeq;          // each call gets a unique ticket
-  showToast('Analyzing nutrition data...');
   document.body.style.cursor = 'wait';
 
-  try {
-    const res = await NutriApi.scanProduct(key);
-    if (seq !== _loadDemoSeq) return;  // a newer call already started — discard
-    updateDashboardUI(res.data);
-    refreshHistory();
+  /* Step 1 — show local product immediately (instant feedback) */
+  const p = products[key];
+  if (p) {
+    loadLocalProduct(p);
     showPage('dashboard');
-  } catch (err) {
-    if (seq !== _loadDemoSeq) return;  // discard stale result
-    const p = products[key];
-    if (p) {
-      loadLocalProduct(p);
-      showPage('dashboard');
-    } else {
-      showToast(err.message || 'Product not found');
-    }
-  } finally {
-    document.body.style.cursor = 'default';
+    showToast('Analyzing nutrition data...');
   }
+
+  /* Step 2 — if logged in, send the REAL barcode to backend to save scan */
+  const token = localStorage.getItem('token');
+  const realBarcode = productBarcodes[key];
+
+  if (token && realBarcode) {
+    try {
+      const res = await NutriApi.scanProduct(realBarcode);
+      if (seq !== _loadDemoSeq) return;  // newer call started — discard
+      /* If API returns richer data, update the dashboard */
+      if (res?.data?.product?.name) {
+        updateDashboardUI(res.data);
+      }
+    } catch (err) {
+      /* API failed — local product is already showing, just refresh history */
+      console.warn('API scan failed, using local demo data:', err.message);
+    }
+    /* Refresh sidebar & history regardless of API success/fail */
+    setTimeout(() => refreshHistory(), 300);
+  } else if (!token) {
+    /* Guest user — just show local product, no history needed */
+    console.log('Guest user — demo product loaded without saving');
+  }
+
+  document.body.style.cursor = 'default';
+}
+
+function showResultCard() {
+  const empty = document.getElementById('emptyState');
+  const card  = document.getElementById('resultCard');
+  if (empty) empty.style.display = 'none';
+  if (card)  card.style.display  = 'block';
+}
+
+function showEmptyState() {
+  const empty = document.getElementById('emptyState');
+  const card  = document.getElementById('resultCard');
+  if (empty) empty.style.display = 'flex';
+  if (card)  card.style.display  = 'none';
 }
 
 function loadLocalProduct(p) {
+  showResultCard();
   document.getElementById('rcName').textContent = p.name;
   document.getElementById('rcBrand').textContent = p.brand;
   document.getElementById('rcTags').innerHTML = p.tags;
@@ -603,7 +714,7 @@ function loadLocalProduct(p) {
 
   document.getElementById('altGrid').innerHTML = p.alts
     .map(a => `
-      <div class="alt-card">
+      <div class="alt-card" onclick="loadDemo('${a.key || a.n.toLowerCase().split(' ')[0]}')">
         ${a.img
           ? `<div class="alt-icon alt-img"><img src="${a.img}" alt="${a.n}"/></div>`
           : `<div class="alt-icon" style="background:${a.bg};color:${a.col}">${a.icon}</div>`
@@ -626,17 +737,70 @@ function loadLocalProduct(p) {
 /* ─── SEARCH ───────────────────────────────── */
 function triggerSearch() {
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  
-  /* 1. Check direct barcode map first */
-  if (barcodeMap[q]) { loadDemo(barcodeMap[q]); return; }
-  
-  /* 2. Keyword mapping */
-  const map = { nutella:'nutella',oat:'oats',oats:'oats',yogurt:'yogurt',chip:'chips',chips:'chips',cola:'cola',granola:'granola',almond:'almonds',almonds:'almonds',yoghurt:'yogurt' };
-  let found = null;
-  for (const k of Object.keys(map)) { if (q.includes(k)) { found = map[k]; break; } }
-  if (found) { loadDemo(found); }
-  else if (q) { showToast('Searching database...'); setTimeout(() => showToast('Product not found. Try manual entry.'), 1400); }
-  else { showToast('Please enter a product name'); }
+
+  if (!q) {
+    showToast('Please enter a product name');
+    return;
+  }
+
+  console.log('Search query:', q);
+
+  /* 1. Check direct barcode map first (prioritize beautiful demo data for test codes) */
+  if (barcodeMap[q]) {
+    console.log('Found in barcode map:', q);
+    loadDemo(barcodeMap[q]);
+    return;
+  }
+
+  /* 2. Keyword mapping - check longer matches first */
+  const map = {
+    'roasted almonds': 'almonds',
+    'greek yogurt': 'yogurt',
+    'chocolate granola': 'granola',
+    'nutella': 'nutella',
+    'oats': 'oats',
+    'oat': 'oats',
+    'yogurt': 'yogurt',
+    'yoghurt': 'yogurt',
+    'chips': 'chips',
+    'chip': 'chips',
+    'cola': 'cola',
+    'granola': 'granola',
+    'almonds': 'almonds',
+    'almond': 'almonds',
+    'kitkat': 'kitkat',
+    'kit kat': 'kitkat'
+  };
+
+  /* Check exact match first */
+  if (map[q]) {
+    console.log('Found exact match:', q, '→', map[q]);
+    loadDemo(map[q]);
+    return;
+  }
+
+  /* Check partial match (longest first to avoid false matches) */
+  const sortedKeys = Object.keys(map).sort((a, b) => b.length - a.length);
+  for (const k of sortedKeys) {
+    if (q.includes(k)) {
+      console.log('Found partial match:', k, '→', map[k]);
+      loadDemo(map[k]);
+      return;
+    }
+  }
+
+  /* Not found in demo - try API */
+  console.log('Not in demo products, trying API');
+  showToast('Searching database...');
+  // Give API time to respond
+  setTimeout(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      showToast('Product not found. Please log in or try another product.');
+    } else {
+      showToast('Product not found. Try another search.');
+    }
+  }, 1400);
 }
 document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') triggerSearch(); });
 
@@ -652,7 +816,19 @@ function setTab(el, mode) {
 
 /* ─── BARCODE SCANNER ───────────────────────── */
 let scannerCodeReader = null, scannerStream = null, scanActive = false;
-const barcodeMap = { '3017620422003':'nutella','8901234567890':'oats','8900012345678':'yogurt','5012345678901':'chips','4901234567890':'cola','7891234567890':'granola','3456789012345':'almonds' };
+const barcodeMap = { '3017620422003':'nutella','8901234567890':'oats','8900012345678':'yogurt','5012345678901':'chips','4901234567890':'cola','7891234567890':'granola','3456789012345':'almonds','7613032707717':'kitkat' };
+
+/* Reverse map: product key → real barcode number */
+const productBarcodes = {
+  'oats':    '8901234567890',
+  'yogurt':  '8900012345678',
+  'chips':   '5012345678901',
+  'cola':    '4901234567890',
+  'granola': '7891234567890',
+  'almonds': '3456789012345',
+  'nutella': '3017620422003',
+  'kitkat':  '7613032707717'
+};
 
 function toggleBarcodeRefs() {
   const el = document.getElementById('barcodeRefs');
@@ -840,18 +1016,27 @@ async function onBarcodeDetected(code) {
   const flash = document.getElementById('foundFlash');
   flash.classList.add('flash');
   setTimeout(() => flash.classList.remove('flash'), 300);
-  setStatus(`Barcode: ${code}`, false, true);
-  showToast(`Barcode detected: ${code}`);
+  /* Prioritize local demo data for test barcodes */
+  const key = barcodeMap[code];
+  if (key) { closeScanner(); showPage('dashboard'); loadDemo(key); return; }
+
   try {
-    closeScanner(); showPage('dashboard');
     const res = await NutriApi.scanProduct(code);
+    // Validate the response has real data (score > 0 and product name)
+    if (!res.data || !res.data.product || !res.data.product.name || (res.data.score !== undefined && res.data.score <= 0)) {
+      throw new Error('Invalid product data returned');
+    }
+    closeScanner(); showPage('dashboard');
     updateDashboardUI(res.data);
     refreshHistory();
     showToast(`${res.data.product.name} analyzed successfully`);
   } catch(err) {
-    const key = barcodeMap[code];
-    if (key) loadDemo(key);
-    else { showToast('Product not found. Try manual entry.'); document.getElementById('searchInput').value = code; scanActive = true; }
+    closeScanner();
+    showToast('Product not found. Try searching by name or use manual entry.');
+    showPage('dashboard');
+    showEmptyState();
+    document.getElementById('searchInput').value = code;
+    scanActive = false;
   }
 }
 const _scannerHintDefault = '<div class="scanner-hint">Point your camera at any barcode on a food package. Keep it steady — scanning happens automatically.</div>';
@@ -881,16 +1066,17 @@ function submitManualBarcode() {
 
 /* ─── UPDATE DASHBOARD (live API) ─────────── */
 function updateDashboardUI(data) {
+  showResultCard();
   const product = data.product;
   const card = document.getElementById('resultCard');
-  
+
   // Trigger card entrance animation
   card.classList.remove('result-card-enter');
   void card.offsetWidth;
   card.classList.add('result-card-enter');
 
-  document.getElementById('rcName').textContent = product.name || 'Unknown Product';
-  document.getElementById('rcBrand').textContent = `${product.brand || 'No Brand'} · Barcode: ${product.barcode || '--'}`;
+  document.getElementById('rcName').textContent = product.name || `Unnamed Product (${product.barcode || 'Unknown'})`;
+  document.getElementById('rcBrand').textContent = `${product.brand || 'No Brand Info'} · Barcode: ${product.barcode || '--'}`;
 
   const iconEl = document.getElementById('rcIcon');
   const imgSrc = product.img || product.imageUrl;
@@ -931,7 +1117,7 @@ function updateDashboardUI(data) {
   const altGrid = document.getElementById('altGrid');
   altGrid.innerHTML = data.alternatives?.length
     ? data.alternatives.map(a => `
-      <div class="alt-card">
+      <div class="alt-card" onclick="loadDemo('${a.barcode || a.name}')">
         ${a.imageUrl
           ? `<div class="alt-icon alt-img"><img src="${a.imageUrl}" alt="${a.name}"/></div>`
           : `<div class="alt-icon" style="background:var(--emerald-light);color:var(--emerald)">${(a.name||'?').charAt(0).toUpperCase()}</div>`
@@ -964,6 +1150,10 @@ async function refreshProfile() {
     const profile = res.data;
     const user = profile.userId || {};
     const name = user.name || 'User';
+
+    /* Store user role for admin access control */
+    currentUserRole = user.role || null;
+    updateAdminNavVisibility();
 
     const goalMap = {
       'weight_loss':'Weight Loss','muscle_gain':'Muscle Gain',
@@ -1052,8 +1242,18 @@ async function refreshProfile() {
 
 async function refreshHistory() {
   try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('No token - user not logged in');
+      throw new Error('Not authenticated');
+    }
+
+    console.log('Fetching history from API...');
     const data = await NutriApi.getHistory();
+    console.log('History data received:', data);
+
     const items = data.data || [];
+    console.log('Items count:', items.length);
     const container = document.querySelector('.history-table');
 
     if (container) {
@@ -1092,8 +1292,11 @@ async function refreshHistory() {
     updateHistoryAnalytics(items);
 
   } catch (err) {
-    console.error('Failed to load history:', err);
-    if (!localStorage.getItem('token')) {
+    console.error('Failed to load history - Error details:', err.message, err);
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.log('User not logged in');
       clearSidebarMockData();
       /* Show sign-in prompt in history table */
       const container = document.querySelector('.history-table');
@@ -1105,6 +1308,9 @@ async function refreshHistory() {
       }
       /* Reset donut and analytics to empty */
       updateHistoryAnalytics([]);
+    } else {
+      console.error('API Error while fetching history. Token exists but API failed:', err.message);
+      showToast('Failed to load history. Please try again.');
     }
   }
 }
@@ -1208,7 +1414,26 @@ async function handleLogin() {
 }
 function checkAuth() {
   const btn = document.getElementById('nav-register');
-  if (btn) btn.style.display = localStorage.getItem('token') ? 'none' : 'block';
+  const logoutBtn = document.getElementById('logoutBtn');
+  const isLoggedIn = !!localStorage.getItem('token');
+
+  if (btn) btn.style.display = isLoggedIn ? 'none' : 'block';
+  if (logoutBtn) logoutBtn.style.display = isLoggedIn ? 'block' : 'none';
+
+  /* Reset admin visibility if user is not logged in */
+  if (!isLoggedIn) {
+    currentUserRole = null;
+    updateAdminNavVisibility();
+  }
+}
+
+/* ─── Update admin nav visibility based on user role ─── */
+function updateAdminNavVisibility() {
+  const adminBtn = document.getElementById('nav-admin');
+  if (!adminBtn) return;
+
+  const isAdmin = currentUserRole === 'admin';
+  adminBtn.style.display = isAdmin ? 'block' : 'none';
 }
 
 /* ─── PROFILE SAVE ────────────────────────────── */
@@ -1232,10 +1457,67 @@ async function saveProfile() {
     showToast(err.message || 'Failed to save profile');
   }
 }
-function logout() { 
-  localStorage.removeItem('token'); 
-  checkAuth(); 
-  showPage('landing'); 
+function logout() {
+  localStorage.removeItem('token');
+  currentUserRole = null;
+  updateAdminNavVisibility();
+  checkAuth();
+
+  /* Clear all user data from UI */
+  clearSidebarMockData();
+
+  /* Clear dashboard product card */
+  showEmptyState();
+
+  /* Clear history table */
+  const historyContainer = document.querySelector('.history-table');
+  if (historyContainer) {
+    const header = historyContainer.querySelector('.ht-header');
+    historyContainer.innerHTML = '';
+    if (header) historyContainer.appendChild(header);
+    historyContainer.innerHTML += '<div style="padding:24px;text-align:center;color:var(--ink3);font-size:.875rem;">Sign in to view your scan history</div>';
+  }
+
+  /* Reset analytics charts */
+  updateHistoryAnalytics([]);
+
+  /* Clear profile form fields - both text inputs and text content */
+  const profileFields = ['profFirstName', 'profLastName', 'profAge', 'profGender', 'profWeight', 'profHeight'];
+  profileFields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.tagName === 'INPUT') {
+      el.value = '';
+    }
+  });
+
+  /* Clear profile display sections */
+  const displayFields = ['profDisplayName', 'profEmailLine'];
+  displayFields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = '—';
+  });
+
+  /* Clear profile chips */
+  const profChips = document.getElementById('profChips');
+  if (profChips) {
+    profChips.innerHTML = '<span class="prof-chip" style="opacity:.5">No goals set</span>';
+  }
+
+  /* Clear profile avatar and health goals checkboxes */
+  const profAvatar = document.getElementById('profAvatar');
+  if (profAvatar) profAvatar.textContent = 'G';
+
+  /* Clear all health goal toggles */
+  document.querySelectorAll('.toggle-group:first-of-type .toggle input').forEach(checkbox => {
+    checkbox.checked = false;
+  });
+
+  /* Clear allergy chips */
+  document.querySelectorAll('.allergy-chip').forEach(chip => {
+    chip.classList.add('inactive');
+  });
+
+  showPage('landing');
 }
 
 /* ─── FAV ──────────────────────────────────── */
@@ -1274,13 +1556,36 @@ document.querySelectorAll('.fh-filter').forEach(btn => {
   });
 });
 
+/* ─── DIAGNOSTIC FUNCTION ──────────────────────── */
+function diagnoseApp() {
+  console.log('=== NUTRISCAN DIAGNOSTIC ===');
+  const token = localStorage.getItem('token');
+  console.log('Token exists:', !!token);
+  console.log('Token value:', token ? token.substring(0, 20) + '...' : 'None');
+  console.log('Current user role:', currentUserRole || 'None');
+  console.log('Is logged in:', !!token);
+  console.log('API Base URL:', NutriApi.BASE_URL);
+
+  /* Try to fetch history to see what happens */
+  if (token) {
+    console.log('Attempting to fetch history...');
+    NutriApi.getHistory().then(res => {
+      console.log('History API Response:', res);
+    }).catch(err => {
+      console.error('History API Error:', err.message);
+    });
+  } else {
+    console.log('No token - cannot fetch history');
+  }
+
+  console.log('=== END DIAGNOSTIC ===');
+}
+
 /* ─── INIT ───────────────────────────────────── */
 window.addEventListener('load', () => {
   const token = localStorage.getItem('token');
   checkAuth();
-
-  /* Always pre-load default product into dashboard result card (shows image) */
-  loadLocalProduct(products.oats);
+  updateAdminNavVisibility();
 
   if (token) {
     showPage('dashboard');
