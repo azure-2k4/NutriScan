@@ -1,7 +1,7 @@
 // src/services/scan.service.js
 //
 // ═══════════════════════════════════════════════════════════
-//  THE MEDIATOR — Dev 2's contribution to the shared service
+//  THE MEDIATOR 
 // ═══════════════════════════════════════════════════════════
 //
 //  This service is the central coordinator for a scan request.
@@ -12,10 +12,10 @@
 //  [POST /api/scan/barcode/:code]
 //         │
 //         ▼
-//  Step 1 ── getProductData()          ← DEV 2 (YOU) — this file
+//  Step 1 ── getProductData()          ← DEV 2 
 //         │   Gets nutrition data from cache/OFF API
 //         │
-//  Step 2 ── getUserProfile()          ← DEV 2 (YOU) — this file
+//  Step 2 ── getUserProfile()          ← DEV 2 
 //         │   Gets user's allergies, conditions, health goals
 //         │
 //  Step 3 ── scoringService.score()    ← DEV 3 — scoring.service.js
