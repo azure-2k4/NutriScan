@@ -4,3 +4,5 @@ backend/.env
 env
 .env
 node_modules/
+.DS_Store
+.claude/
